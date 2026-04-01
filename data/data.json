@@ -67,6 +67,42 @@
             "fiber": 2.5,
             "sugar": 9.2,
             "servingSize": "1 orange"
+        },
+        {
+            "_id": "69cd568b140fccd7f826edbd",
+            "name": "spinach",
+            "category": "vegetable",
+            "calories": 25,
+            "protein": 2,
+            "carbs": 3,
+            "fat": 0,
+            "fiber": 2,
+            "sugar": 0,
+            "servingSize": "2 cups"
+        },
+        {
+            "_id": "69cd572e140fccd7f826edbe",
+            "name": "ground beef",
+            "category": "meat",
+            "calories": 200,
+            "protein": 22,
+            "carbs": 0,
+            "fat": 11,
+            "fiber": 0,
+            "sugar": 0,
+            "servingSize": ".18kg"
+        },
+        {
+            "_id": "69cd5795140fccd7f826edbf",
+            "name": "white rice",
+            "category": "grain",
+            "calories": 160,
+            "protein": 5,
+            "carbs": 34,
+            "fat": 0,
+            "fiber": 0,
+            "sugar": 0,
+            "servingSize": "1/4 cup dry"
         }
     ]
 }
