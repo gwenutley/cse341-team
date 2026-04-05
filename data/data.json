@@ -1,108 +1,91 @@
-
-
-
-{ "_comment": "This json contains user information for the application.",
-  "users":
-    []
-}
-
-{ "_comment": "This json contains users health goals",
-  "goals":
-    []
-}
-
-{ "_comment": "This json contains users daily logs of food consumption and exercise.",
-  "daily_logs":
-    []
-}
-
 {
-  "_comment": "This JSON contains nutritional information for various foods.",
-  "foods":
-    [
-        {
-            "_id": "69cd53ca140fccd7f826edb8",
-            "name": "Apple",
-            "category": "fruit",
-            "calories": 95,
-            "protein": 1,
-            "carbs": 25,
-            "fat": 0,
-            "fiber": 3,
-            "sugar": 19,
-            "servingSize": "one"
-        },
-        {
-            "_id": "69cd5468140fccd7f826edb9",
-            "name": "Broccoli",
-            "category": "vegetable",
-            "calories": 31,
-            "protein": 2.8,
-            "carbs": 6,
-            "fat": 0.5,
-            "fiber": 2,
-            "sugar": 1.5,
-            "servingSize": "one cup"
-        },
-        {
-            "_id": "69cd5546140fccd7f826edbb",
-            "name": "Milk",
-            "category": "dairy",
-            "calories": 150,
-            "protein": 8,
-            "carbs": 12,
-            "fat": 8,
-            "fiber": 0,
-            "sugar": 11,
-            "servingSize": "1 cup"
-        },
-        {
-            "_id": "69cd5623140fccd7f826edbc",
-            "name": "orange",
-            "category": "fruit",
-            "calories": 47,
-            "protein": 1,
-            "carbs": 11,
-            "fat": 0,
-            "fiber": 2.5,
-            "sugar": 9.2,
-            "servingSize": "1 orange"
-        },
-        {
-            "_id": "69cd568b140fccd7f826edbd",
-            "name": "spinach",
-            "category": "vegetable",
-            "calories": 25,
-            "protein": 2,
-            "carbs": 3,
-            "fat": 0,
-            "fiber": 2,
-            "sugar": 0,
-            "servingSize": "2 cups"
-        },
-        {
-            "_id": "69cd572e140fccd7f826edbe",
-            "name": "ground beef",
-            "category": "meat",
-            "calories": 200,
-            "protein": 22,
-            "carbs": 0,
-            "fat": 11,
-            "fiber": 0,
-            "sugar": 0,
-            "servingSize": ".18kg"
-        },
-        {
-            "_id": "69cd5795140fccd7f826edbf",
-            "name": "white rice",
-            "category": "grain",
-            "calories": 160,
-            "protein": 5,
-            "carbs": 34,
-            "fat": 0,
-            "fiber": 0,
-            "sugar": 0,
-            "servingSize": "1/4 cup dry"
-        }
-    ]
+  "users": [],
+  "goals": [],
+  "daily_logs": [],
+  "foods": [
+    {
+      "_id": "69cd53ca140fccd7f826edb8",
+      "name": "Apple",
+      "category": "fruit",
+      "calories": 95,
+      "protein": 1,
+      "carbs": 25,
+      "fat": 0,
+      "fiber": 3,
+      "sugar": 19,
+      "servingSize": "one"
+    },
+    {
+      "_id": "69cd5468140fccd7f826edb9",
+      "name": "Broccoli",
+      "category": "vegetable",
+      "calories": 31,
+      "protein": 2.8,
+      "carbs": 6,
+      "fat": 0.5,
+      "fiber": 2,
+      "sugar": 1.5,
+      "servingSize": "one cup"
+    },
+    {
+      "_id": "69cd5546140fccd7f826edbb",
+      "name": "Milk",
+      "category": "dairy",
+      "calories": 150,
+      "protein": 8,
+      "carbs": 12,
+      "fat": 8,
+      "fiber": 0,
+      "sugar": 11,
+      "servingSize": "1 cup"
+    },
+    {
+      "_id": "69cd5623140fccd7f826edbc",
+      "name": "Orange",
+      "category": "fruit",
+      "calories": 47,
+      "protein": 1,
+      "carbs": 11,
+      "fat": 0,
+      "fiber": 2.5,
+      "sugar": 9.2,
+      "servingSize": "1 orange"
+    },
+    {
+      "_id": "69cd568b140fccd7f826edbd",
+      "name": "Spinach",
+      "category": "vegetable",
+      "calories": 25,
+      "protein": 2,
+      "carbs": 3,
+      "fat": 0,
+      "fiber": 2,
+      "sugar": 0,
+      "servingSize": "2 cups"
+    },
+    {
+      "_id": "69cd572e140fccd7f826edbe",
+      "name": "Ground Beef",
+      "category": "meat",
+      "calories": 200,
+      "protein": 22,
+      "carbs": 0,
+      "fat": 11,
+      "fiber": 0,
+      "sugar": 0,
+      "servingSize": ".18kg"
+    },
+    {
+      "_id": "69cd5795140fccd7f826edbf",
+      "name": "White Rice",
+      "category": "grain",
+      "calories": 160,
+      "protein": 5,
+      "carbs": 34,
+      "fat": 0,
+      "fiber": 0,
+      "sugar": 0,
+      "servingSize": "1/4 cup dry"
+    }
+  ]
 }
