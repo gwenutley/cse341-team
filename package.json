@@ -18,7 +18,9 @@
     "start": "node server.js",
     "dev": "node --watch server.js",
     "format": "prettier --write .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint-staged": "lint-staged",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
   },
   "dependencies": {
     "cors": "^2.8.6",
@@ -28,6 +30,11 @@
     "mongoose": "^9.4.1"
   },
   "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
     "prettier": "^3.8.1"
+  },
+  "lint-staged": {
+    "*.{js,cjs,mjs,json,md}": "prettier --write"
   }
 }
