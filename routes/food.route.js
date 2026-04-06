@@ -3,5 +3,6 @@ const foodController = require('../controllers/food.controller')
 
 router.get('/', foodController.getAll)
 router.get('/:id', foodController.getById)
+router.put('/:id', foodController.update)
 
 module.exports = router
