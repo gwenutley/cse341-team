@@ -8,6 +8,8 @@ const foodSchema = new mongoose.Schema(
     carbs: { type: Number },
     fat: { type: Number },
     fiber: { type: Number },
+    sugar: { type: Number },
+    servingSize: { type: String },
     category: {
       type: String,
       enum: {
