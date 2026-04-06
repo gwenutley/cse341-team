@@ -1,5 +1,5 @@
 const router = require('express').Router()
 
-router.use('/foods', require('./food.router'))
+router.use('/foods', require('./food.route'))
 
 module.exports = router
