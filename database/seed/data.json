@@ -1,10 +1,22 @@
 {
-  "users": [],
+  "users": [
+    {
+      "username": "admin",
+      "email": "admin@example.com",
+      "role": "admin",
+      "password": "password123"
+    },
+    {
+      "username": "user",
+      "email": "user@example.com",
+      "role": "user",
+      "password": "password123"
+    }
+  ],
   "goals": [],
   "daily_logs": [],
   "foods": [
     {
-      "_id": "69cd53ca140fccd7f826edb8",
       "name": "Apple",
       "category": "fruit",
       "calories": 95,
@@ -16,7 +28,6 @@
       "servingSize": "one"
     },
     {
-      "_id": "69cd5468140fccd7f826edb9",
       "name": "Broccoli",
       "category": "vegetable",
       "calories": 31,
@@ -28,7 +39,6 @@
       "servingSize": "one cup"
     },
     {
-      "_id": "69cd5546140fccd7f826edbb",
       "name": "Milk",
       "category": "dairy",
       "calories": 150,
@@ -40,7 +50,6 @@
       "servingSize": "1 cup"
     },
     {
-      "_id": "69cd5623140fccd7f826edbc",
       "name": "Orange",
       "category": "fruit",
       "calories": 47,
@@ -52,7 +61,6 @@
       "servingSize": "1 orange"
     },
     {
-      "_id": "69cd568b140fccd7f826edbd",
       "name": "Spinach",
       "category": "vegetable",
       "calories": 25,
@@ -64,7 +72,6 @@
       "servingSize": "2 cups"
     },
     {
-      "_id": "69cd572e140fccd7f826edbe",
       "name": "Ground Beef",
       "category": "meat",
       "calories": 200,
@@ -76,7 +83,6 @@
       "servingSize": ".18kg"
     },
     {
-      "_id": "69cd5795140fccd7f826edbf",
       "name": "White Rice",
       "category": "grain",
       "calories": 160,
