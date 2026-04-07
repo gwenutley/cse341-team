@@ -1,6 +1,8 @@
 require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
+const swaggerUi = require('swagger-ui-express')
+const swaggerDocument = require('./swagger_output.json')
 const db = require('./database')
 
 const app = express()
@@ -9,7 +11,20 @@ const port = process.env.PORT || 2000
 
 //Middlewares
 app.use(express.json())
-app.use(cors())
+app.use(express.urlencoded({ extended: true }))
+
+// CORS Configuration
+app.use(
+  cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    credentials: false,
+    optionsSuccessStatus: 200,
+  })
+)
+
+// Swagger Documentation
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 //Routes
 app.use('/', require('./routes'))
