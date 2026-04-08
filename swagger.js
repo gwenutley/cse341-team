@@ -6,17 +6,27 @@ const doc = {
     description: 'API for managing Foods and Users with MongoDB',
     version: '1.0.0',
   },
-  host: 'localhost:2000',
+  host: 'frontend341.onrender.com',
   basePath: '/',
-  schemes: ['http', 'https'],
+  schemes: ['https'],
   consumes: ['application/json'],
   produces: ['application/json'],
+  tags: [
+    {
+      name: 'Foods',
+      description: 'Endpoints for managing food items',
+    },
+    {
+      name: 'Users',
+      description: 'Endpoints for managing user accounts',
+    },
+  ],
   definitions: {
     Food: {
       type: 'object',
       required: ['name', 'calories'],
       properties: {
-        _id: {
+        id: {
           type: 'string',
           example: '507f1f77bcf86cd799439011',
         },
@@ -82,7 +92,7 @@ const doc = {
       type: 'object',
       required: ['username', 'email'],
       properties: {
-        _id: {
+        id: {
           type: 'string',
           example: '507f1f77bcf86cd799439012',
         },
