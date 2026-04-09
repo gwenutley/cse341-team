@@ -23,120 +23,25 @@ const doc = {
   ],
   definitions: {
     Food: {
-      type: 'object',
-      required: ['name', 'calories'],
-      properties: {
-        id: {
-          type: 'string',
-          example: '507f1f77bcf86cd799439011',
-        },
-        name: {
-          type: 'string',
-          example: 'Chicken Breast',
-        },
-        calories: {
-          type: 'number',
-          example: 165,
-        },
-        protein: {
-          type: 'number',
-          example: 31,
-        },
-        carbs: {
-          type: 'number',
-          example: 0,
-        },
-        fat: {
-          type: 'number',
-          example: 3.6,
-        },
-        fiber: {
-          type: 'number',
-          example: 0,
-        },
-        sugar: {
-          type: 'number',
-          example: 0,
-        },
-        servingSize: {
-          type: 'string',
-          example: '100g',
-        },
-        category: {
-          type: 'string',
-          enum: [
-            'vegetable',
-            'protein',
-            'grain',
-            'fruit',
-            'fat',
-            'dairy',
-            'snack',
-            'meat',
-            'beverage',
-            'other',
-          ],
-          example: 'protein',
-        },
-        createdAt: {
-          type: 'string',
-          format: 'date-time',
-        },
-        updatedAt: {
-          type: 'string',
-          format: 'date-time',
-        },
-      },
+      $name: 'Chicken Breast',
+      $calories: 165,
+      protein: 31,
+      carbs: 0,
+      fat: 3.6,
+      fiber: 0,
+      sugar: 0,
+      servingSize: '100g',
+      category: 'protein',
     },
     User: {
-      type: 'object',
-      required: ['username', 'email'],
-      properties: {
-        id: {
-          type: 'string',
-          example: '507f1f77bcf86cd799439012',
-        },
-        username: {
-          type: 'string',
-          example: 'john_doe',
-        },
-        email: {
-          type: 'string',
-          format: 'email',
-          example: 'john@example.com',
-        },
-        role: {
-          type: 'string',
-          enum: ['admin', 'user'],
-          default: 'user',
-          example: 'user',
-        },
-        password: {
-          type: 'string',
-          example: 'hashed_password_here',
-        },
-        googleId: {
-          type: 'string',
-          example: 'google_id_12345',
-        },
-        createdAt: {
-          type: 'string',
-          format: 'date-time',
-        },
-        updatedAt: {
-          type: 'string',
-          format: 'date-time',
-        },
-      },
+      $username: 'john_doe',
+      $email: 'john@example.com',
+      role: 'user',
+      password: 'hashed_password_here',
+      googleId: 'google_id_12345',
     },
     Error: {
-      type: 'object',
-      properties: {
-        message: {
-          type: 'string',
-          example: 'Error message',
-        },
-      },
+      message: 'Error message',
     },
   },
 }

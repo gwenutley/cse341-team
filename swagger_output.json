@@ -21,6 +21,16 @@
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "paths": {
+    "/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/foods/": {
       "get": {
         "tags": ["Foods"],
@@ -404,362 +414,77 @@
     "Food": {
       "type": "object",
       "properties": {
-        "type": {
+        "name": {
           "type": "string",
-          "example": "object"
+          "example": "Chicken Breast"
         },
-        "required": {
-          "type": "array",
-          "example": ["name", "calories"],
-          "items": {
-            "type": "string"
-          }
+        "calories": {
+          "type": "number",
+          "example": 165
         },
-        "properties": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "example": {
-                  "type": "string",
-                  "example": "507f1f77bcf86cd799439011"
-                }
-              }
-            },
-            "name": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "example": {
-                  "type": "string",
-                  "example": "Chicken Breast"
-                }
-              }
-            },
-            "calories": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "number"
-                },
-                "example": {
-                  "type": "number",
-                  "example": 165
-                }
-              }
-            },
-            "protein": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "number"
-                },
-                "example": {
-                  "type": "number",
-                  "example": 31
-                }
-              }
-            },
-            "carbs": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "number"
-                },
-                "example": {
-                  "type": "number",
-                  "example": 0
-                }
-              }
-            },
-            "fat": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "number"
-                },
-                "example": {
-                  "type": "number",
-                  "example": 3.6
-                }
-              }
-            },
-            "fiber": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "number"
-                },
-                "example": {
-                  "type": "number",
-                  "example": 0
-                }
-              }
-            },
-            "sugar": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "number"
-                },
-                "example": {
-                  "type": "number",
-                  "example": 0
-                }
-              }
-            },
-            "servingSize": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "example": {
-                  "type": "string",
-                  "example": "100g"
-                }
-              }
-            },
-            "category": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "enum": {
-                  "type": "array",
-                  "example": [
-                    "vegetable",
-                    "protein",
-                    "grain",
-                    "fruit",
-                    "fat",
-                    "dairy",
-                    "snack",
-                    "meat",
-                    "beverage",
-                    "other"
-                  ],
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "example": {
-                  "type": "string",
-                  "example": "protein"
-                }
-              }
-            },
-            "createdAt": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "date-time"
-                }
-              }
-            },
-            "updatedAt": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "date-time"
-                }
-              }
-            }
-          }
+        "protein": {
+          "type": "number",
+          "example": 31
+        },
+        "carbs": {
+          "type": "number",
+          "example": 0
+        },
+        "fat": {
+          "type": "number",
+          "example": 3.6
+        },
+        "fiber": {
+          "type": "number",
+          "example": 0
+        },
+        "sugar": {
+          "type": "number",
+          "example": 0
+        },
+        "servingSize": {
+          "type": "string",
+          "example": "100g"
+        },
+        "category": {
+          "type": "string",
+          "example": "protein"
         }
-      }
+      },
+      "required": ["name", "calories"]
     },
     "User": {
       "type": "object",
       "properties": {
-        "type": {
+        "username": {
           "type": "string",
-          "example": "object"
+          "example": "john_doe"
         },
-        "required": {
-          "type": "array",
-          "example": ["username", "email"],
-          "items": {
-            "type": "string"
-          }
+        "email": {
+          "type": "string",
+          "example": "john@example.com"
         },
-        "properties": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "example": {
-                  "type": "string",
-                  "example": "507f1f77bcf86cd799439012"
-                }
-              }
-            },
-            "username": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "example": {
-                  "type": "string",
-                  "example": "john_doe"
-                }
-              }
-            },
-            "email": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "email"
-                },
-                "example": {
-                  "type": "string",
-                  "example": "john@example.com"
-                }
-              }
-            },
-            "role": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "enum": {
-                  "type": "array",
-                  "example": ["admin", "user"],
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "default": {
-                  "type": "string",
-                  "example": "user"
-                },
-                "example": {
-                  "type": "string",
-                  "example": "user"
-                }
-              }
-            },
-            "password": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "example": {
-                  "type": "string",
-                  "example": "hashed_password_here"
-                }
-              }
-            },
-            "googleId": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "example": {
-                  "type": "string",
-                  "example": "google_id_12345"
-                }
-              }
-            },
-            "createdAt": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "date-time"
-                }
-              }
-            },
-            "updatedAt": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "format": {
-                  "type": "string",
-                  "example": "date-time"
-                }
-              }
-            }
-          }
+        "role": {
+          "type": "string",
+          "example": "user"
+        },
+        "password": {
+          "type": "string",
+          "example": "hashed_password_here"
+        },
+        "googleId": {
+          "type": "string",
+          "example": "google_id_12345"
         }
-      }
+      },
+      "required": ["username", "email"]
     },
     "Error": {
       "type": "object",
       "properties": {
-        "type": {
+        "message": {
           "type": "string",
-          "example": "object"
-        },
-        "properties": {
-          "type": "object",
-          "properties": {
-            "message": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "example": {
-                  "type": "string",
-                  "example": "Error message"
-                }
-              }
-            }
-          }
+          "example": "Error message"
         }
       }
     }
