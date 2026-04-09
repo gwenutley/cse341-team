@@ -32,4 +32,6 @@ const foodSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
+foodSchema.plugin(require('./toJSON.plugin'))
+
 module.exports = mongoose.model('Food', foodSchema)

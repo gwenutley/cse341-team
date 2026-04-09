@@ -11,4 +11,6 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
+userSchema.plugin(require('./toJSON.plugin'))
+
 module.exports = mongoose.model('User', userSchema)
