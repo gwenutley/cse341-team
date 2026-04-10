@@ -8,5 +8,7 @@ router.get('/', (_req, res) => {
 })
 router.use('/foods', require('./food.route'))
 router.use('/users', require('./user.route'))
+router.use('/goals', require('./goal.route'))
+router.use('/daily-logs', require('./dailyLog.route'))
 
 module.exports = router
