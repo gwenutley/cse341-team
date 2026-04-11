@@ -40,6 +40,21 @@ const doc = {
       password: 'hashed_password_here',
       googleId: 'google_id_12345',
     },
+    Log: {
+      $userId: '6615f3c2a9b1c8e4b1234567',
+      $foodId: '6615f3c2a9b1c8e4b7654321',
+      $date: '2026-04-10',
+      $quantity: 2,
+    },
+
+    Goal: {
+      $userId: '6615f3c2a9b1c8e4b1234567',
+      calories: 2000,
+      protein: 150,
+      carbs: 250,
+      fat: 70,
+      fiber: 30,
+    },
     Error: {
       message: 'Error message',
     },
