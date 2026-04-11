@@ -6,12 +6,13 @@ const {
 } = require('../middleware/request.middleware')
 
 router.param('id', validateObjectIdParam)
+const { isAuthenticated } = require('../middleware/authenticate')
 
 router.get('/', goalController.getAll)
 router.get('/:id', goalController.getById)
 
-router.put('/:id', requireBody, goalController.update)
-router.post('/', requireBody, goalController.create)
-router.delete('/:id', goalController.deleteById)
+router.put('/:id', isAuthenticated, requireBody,goalController.update)
+router.post('/', isAuthenticated, requireBody, goalController.create)
+router.delete('/:id', isAuthenticated, goalController.deleteById)
 
 module.exports = router

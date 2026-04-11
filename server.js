@@ -8,6 +8,8 @@ const {
   errorHandler,
   notFoundHandler,
 } = require('./middleware/error.middleware')
+const passport = require('passport')
+const session = require('express-session')
 
 const app = express()
 
@@ -16,6 +18,20 @@ const port = process.env.PORT || 2000
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+//initialize express session
+app
+  .use(
+    session({
+      secret: 'secret',
+      resave: false,
+      saveUninitialized: true,
+    })
+  )
+  //initialize passport
+  .use(passport.initialize())
+  .use(passport.session())
+
+// CORS Configuration
 app.use(
   cors({
     origin: '*',

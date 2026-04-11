@@ -7,11 +7,13 @@ const {
 
 router.param('id', validateObjectIdParam)
 
+const { isAuthenticated } = require('../middleware/authenticate')
+
 router.get('/', dailyLogController.getAll)
 router.get('/:id', dailyLogController.getById)
 
-router.put('/:id', requireBody, dailyLogController.update)
-router.post('/', requireBody, dailyLogController.create)
-router.delete('/:id', dailyLogController.deleteById)
+router.put('/:id', isAuthenticated, requireBody, dailyLogController.update)
+router.post('/', isAuthenticated, requireBody, dailyLogController.create)
+router.delete('/:id', isAuthenticated, dailyLogController.deleteById)
 
 module.exports = router
