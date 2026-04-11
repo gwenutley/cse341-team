@@ -1,0 +1,32 @@
+@port = 2000
+@baseUrl = http://localhost:{{port}}
+@userId = 69d3e2645c93244b93389617
+
+### Get all users
+GET {{baseUrl}}/users
+
+### Get user by id
+GET {{baseUrl}}/users/{{userId}}
+
+### Create a new user
+POST {{baseUrl}}/users HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "example",
+  "email": "example@example.com",
+  "role": "admin",
+  "password": "password123"
+}
+
+### Update a user by id
+PUT {{baseUrl}}/users/69d69848e0bd25ef475a3d60 HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "email": "12345@example.com"
+}
+
+### Delete a user by their id
+DELETE {{baseUrl}}/users/69d433632d13659c105cb539

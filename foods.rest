@@ -1,0 +1,37 @@
+@port = 2000
+@baseUrl = http://localhost:{{port}}
+@foodId = 69cd5795140fccd7f826edbf
+
+### Get all foods
+GET {{baseUrl}}/foods
+
+### Get food by id
+GET {{baseUrl}}/foods/{{foodId}}
+
+### Create a new food 
+POST {{baseUrl}}/foods HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "bread",
+  "category": "grain",
+  "calories": 160,
+  "protein": 1,
+  "carbs": 40,
+  "fat": 0,
+  "fiber": 0,
+  "sugar": 2,
+  "servingSize": "1 piece (28g)"
+}
+
+### Update a food by id
+PUT {{baseUrl}}/foods/{{foodId}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "tortilla",
+  "calories": 170
+}
+
+### Delete a food by id
+DELETE {{baseUrl}}/foods/69d4306978b49ed0ded28a92
