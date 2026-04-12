@@ -1,7 +1,7 @@
 const goalModel = require('../model/goal.model')
 const ApiError = require('../utils/apiError')
 
-const getAll = async (_req, res) => {
+const getAll = async (_req, res, next) => {
   /*
     #swagger.tags = ['Goals']
     #swagger.summary = 'Retrieve all goals'
@@ -15,11 +15,15 @@ const getAll = async (_req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  const goals = await goalModel.findAll()
-  res.status(200).json(goals)
+  try {
+    const goals = await goalModel.findAll()
+    res.status(200).json(goals)
+  } catch (error) {
+    next(error)
+  }
 }
 
-const getById = async (req, res) => {
+const getById = async (req, res, next) => {
   /*
     #swagger.tags = ['Goals']
     #swagger.summary = 'Retrieve a single goal'
@@ -38,15 +42,18 @@ const getById = async (req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  const goal = await goalModel.findById(req.params.id)
-  if (!goal) {
-    throw new ApiError(404, 'Goal not found')
+  try {
+    const goal = await goalModel.findById(req.params.id)
+    if (!goal) {
+      throw new ApiError(404, 'Goal not found')
+    }
+    res.status(200).json(goal)
+  } catch (error) {
+    next(error)
   }
-
-  res.status(200).json(goal)
 }
 
-const update = async (req, res) => {
+const update = async (req, res, next) => {
   /*
     #swagger.tags = ['Goals']
     #swagger.summary = 'Update an existing goal'
@@ -74,15 +81,18 @@ const update = async (req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  const goal = await goalModel.updateById(req.params.id, req.body)
-  if (!goal) {
-    throw new ApiError(404, 'Goal not found')
+  try {
+    const goal = await goalModel.updateById(req.params.id, req.body)
+    if (!goal) {
+      throw new ApiError(404, 'Goal not found')
+    }
+    res.status(200).json(goal)
+  } catch (error) {
+    next(error)
   }
-
-  res.status(200).json(goal)
 }
 
-const create = async (req, res) => {
+const create = async (req, res, next) => {
   /*
     #swagger.tags = ['Goals']
     #swagger.summary = 'Create a new goal'
@@ -105,11 +115,15 @@ const create = async (req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  const goal = await goalModel.create(req.body)
-  res.status(201).json(goal)
+  try {
+    const goal = await goalModel.create(req.body)
+    res.status(201).json(goal)
+  } catch (error) {
+    next(error)
+  }
 }
 
-const deleteById = async (req, res) => {
+const deleteById = async (req, res, next) => {
   /*
     #swagger.tags = ['Goals']
     #swagger.summary = 'Delete a goal'
@@ -128,12 +142,15 @@ const deleteById = async (req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  const goal = await goalModel.deleteById(req.params.id)
-  if (!goal) {
-    throw new ApiError(404, 'Goal not found')
+  try {
+    const goal = await goalModel.deleteById(req.params.id)
+    if (!goal) {
+      throw new ApiError(404, 'Goal not found')
+    }
+    res.status(200).json({ message: 'Goal deleted successfully' })
+  } catch (error) {
+    next(error)
   }
-
-  res.status(200).json({ message: 'Goal deleted successfully' })
 }
 
 module.exports = {

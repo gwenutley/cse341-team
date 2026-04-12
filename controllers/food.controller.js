@@ -1,7 +1,7 @@
 const foodModel = require('../model/food.model')
 const ApiError = require('../utils/apiError')
 
-const getAll = async (_req, res) => {
+const getAll = async (_req, res, next) => {
   /*
     #swagger.tags = ['Foods']
     #swagger.summary = 'Retrieve all foods'
@@ -15,11 +15,15 @@ const getAll = async (_req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  const foods = await foodModel.findAll()
-  res.status(200).json(foods)
+  try {
+    const foods = await foodModel.findAll()
+    res.status(200).json(foods)
+  } catch (error) {
+    next(error)
+  }
 }
 
-const getById = async (req, res) => {
+const getById = async (req, res, next) => {
   /*
     #swagger.tags = ['Foods']
     #swagger.summary = 'Retrieve a single food'
@@ -38,15 +42,18 @@ const getById = async (req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  const food = await foodModel.findById(req.params.id)
-  if (!food) {
-    throw new ApiError(404, 'Food not found')
+  try {
+    const food = await foodModel.findById(req.params.id)
+    if (!food) {
+      throw new ApiError(404, 'Food not found')
+    }
+    res.status(200).json(food)
+  } catch (error) {
+    next(error)
   }
-
-  res.status(200).json(food)
 }
 
-const update = async (req, res) => {
+const update = async (req, res, next) => {
   /*
     #swagger.tags = ['Foods']
     #swagger.summary = 'Update an existing food'
@@ -74,15 +81,18 @@ const update = async (req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  const food = await foodModel.updateById(req.params.id, req.body)
-  if (!food) {
-    throw new ApiError(404, 'Food not found')
+  try {
+    const food = await foodModel.updateById(req.params.id, req.body)
+    if (!food) {
+      throw new ApiError(404, 'Food not found')
+    }
+    res.status(200).json(food)
+  } catch (error) {
+    next(error)
   }
-
-  res.status(200).json(food)
 }
 
-const create = async (req, res) => {
+const create = async (req, res, next) => {
   /*
     #swagger.tags = ['Foods']
     #swagger.summary = 'Create a new food'
@@ -105,11 +115,15 @@ const create = async (req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  const food = await foodModel.create(req.body)
-  res.status(201).json(food)
+  try {
+    const food = await foodModel.create(req.body)
+    res.status(201).json(food)
+  } catch (error) {
+    next(error)
+  }
 }
 
-const deleteById = async (req, res) => {
+const deleteById = async (req, res, next) => {
   /*
     #swagger.tags = ['Foods']
     #swagger.summary = 'Delete a food item'
@@ -128,12 +142,15 @@ const deleteById = async (req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  const food = await foodModel.deleteById(req.params.id)
-  if (!food) {
-    throw new ApiError(404, 'Food not found')
+  try {
+    const food = await foodModel.deleteById(req.params.id)
+    if (!food) {
+      throw new ApiError(404, 'Food not found')
+    }
+    res.status(200).json({ message: 'Food deleted successfully' })
+  } catch (error) {
+    next(error)
   }
-
-  res.status(200).json({ message: 'Food deleted successfully' })
 }
 
 module.exports = {

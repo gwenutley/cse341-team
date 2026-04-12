@@ -1,7 +1,7 @@
 const userModel = require('../model/user.model')
 const ApiError = require('../utils/apiError')
 
-const getAll = async (_req, res) => {
+const getAll = async (_req, res, next) => {
   /*
     #swagger.tags = ['Users']
     #swagger.summary = 'Retrieve all users'
@@ -15,11 +15,15 @@ const getAll = async (_req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  const users = await userModel.findAll()
-  res.status(200).json(users)
+  try {
+    const users = await userModel.findAll()
+    res.status(200).json(users)
+  } catch (error) {
+    next(error)
+  }
 }
 
-const getById = async (req, res) => {
+const getById = async (req, res, next) => {
   /*
     #swagger.tags = ['Users']
     #swagger.summary = 'Retrieve a single user'
@@ -38,15 +42,18 @@ const getById = async (req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  const user = await userModel.findById(req.params.id)
-  if (!user) {
-    throw new ApiError(404, 'User not found')
+  try {
+    const user = await userModel.findById(req.params.id)
+    if (!user) {
+      throw new ApiError(404, 'User not found')
+    }
+    res.status(200).json(user)
+  } catch (error) {
+    next(error)
   }
-
-  res.status(200).json(user)
 }
 
-const update = async (req, res) => {
+const update = async (req, res, next) => {
   /*
     #swagger.tags = ['Users']
     #swagger.summary = 'Update an existing user'
@@ -74,15 +81,18 @@ const update = async (req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  const user = await userModel.updateById(req.params.id, req.body)
-  if (!user) {
-    throw new ApiError(404, 'User not found')
+  try {
+    const user = await userModel.updateById(req.params.id, req.body)
+    if (!user) {
+      throw new ApiError(404, 'User not found')
+    }
+    res.status(200).json(user)
+  } catch (error) {
+    next(error)
   }
-
-  res.status(200).json(user)
 }
 
-const create = async (req, res) => {
+const create = async (req, res, next) => {
   /*
     #swagger.tags = ['Users']
     #swagger.summary = 'Create a new user'
@@ -105,11 +115,15 @@ const create = async (req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  const user = await userModel.create(req.body)
-  res.status(201).json(user)
+  try {
+    const user = await userModel.create(req.body)
+    res.status(201).json(user)
+  } catch (error) {
+    next(error)
+  }
 }
 
-const deleteById = async (req, res) => {
+const deleteById = async (req, res, next) => {
   /*
     #swagger.tags = ['Users']
     #swagger.summary = 'Delete a user account'
@@ -128,12 +142,15 @@ const deleteById = async (req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  const user = await userModel.deleteById(req.params.id)
-  if (!user) {
-    throw new ApiError(404, 'User not found')
+  try {
+    const user = await userModel.deleteById(req.params.id)
+    if (!user) {
+      throw new ApiError(404, 'User not found')
+    }
+    res.status(200).json({ message: 'User deleted successfully' })
+  } catch (error) {
+    next(error)
   }
-
-  res.status(200).json({ message: 'User deleted successfully' })
 }
 
 module.exports = {
