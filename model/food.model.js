@@ -15,6 +15,8 @@ const create = async foodData => {
 const updateById = async (id, updateData) => {
   return await Food.findByIdAndUpdate(id, updateData, {
     returnDocument: 'after',
+    runValidators: true,
+    context: 'query',
   })
 }
 
