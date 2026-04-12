@@ -1,4 +1,5 @@
 const foodModel = require('../model/food.model')
+const ApiError = require('../utils/apiError')
 
 const getAll = async (_req, res) => {
   /*
@@ -14,12 +15,8 @@ const getAll = async (_req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  try {
-    const foods = await foodModel.findAll()
-    res.status(200).json(foods)
-  } catch (error) {
-    res.status(500).json({ message: error.message })
-  }
+  const foods = await foodModel.findAll()
+  res.status(200).json(foods)
 }
 
 const getById = async (req, res) => {
@@ -41,15 +38,12 @@ const getById = async (req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  try {
-    const food = await foodModel.findById(req.params.id)
-    if (!food) {
-      return res.status(404).json({ message: 'Food not found' })
-    }
-    res.status(200).json(food)
-  } catch (error) {
-    res.status(500).json({ message: error.message })
+  const food = await foodModel.findById(req.params.id)
+  if (!food) {
+    throw new ApiError(404, 'Food not found')
   }
+
+  res.status(200).json(food)
 }
 
 const update = async (req, res) => {
@@ -80,22 +74,12 @@ const update = async (req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  try {
-    if (!req.body || Object.keys(req.body).length === 0) {
-      return res.status(400).json({ message: 'Request body cannot be empty' })
-    }
-
-    const food = await foodModel.updateById(req.params.id, req.body)
-    if (!food) {
-      return res.status(404).json({ message: 'Food not found' })
-    }
-    res.status(200).json(food)
-  } catch (error) {
-    if (error.name === 'ValidationError') {
-      return res.status(400).json({ message: error.message })
-    }
-    res.status(500).json({ message: error.message })
+  const food = await foodModel.updateById(req.params.id, req.body)
+  if (!food) {
+    throw new ApiError(404, 'Food not found')
   }
+
+  res.status(200).json(food)
 }
 
 const create = async (req, res) => {
@@ -121,19 +105,8 @@ const create = async (req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  try {
-    if (!req.body || Object.keys(req.body).length === 0) {
-      return res.status(400).json({ message: 'Request body cannot be empty' })
-    }
-
-    const food = await foodModel.create(req.body)
-    res.status(201).json(food)
-  } catch (error) {
-    if (error.name === 'ValidationError') {
-      return res.status(400).json({ message: error.message })
-    }
-    res.status(500).json({ message: error.message })
-  }
+  const food = await foodModel.create(req.body)
+  res.status(201).json(food)
 }
 
 const deleteById = async (req, res) => {
@@ -155,15 +128,12 @@ const deleteById = async (req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  try {
-    const food = await foodModel.deleteById(req.params.id)
-    if (!food) {
-      return res.status(404).json({ message: 'Food not found' })
-    }
-    res.status(200).json({ message: 'Food deleted successfully' })
-  } catch (error) {
-    res.status(500).json({ message: error.message })
+  const food = await foodModel.deleteById(req.params.id)
+  if (!food) {
+    throw new ApiError(404, 'Food not found')
   }
+
+  res.status(200).json({ message: 'Food deleted successfully' })
 }
 
 module.exports = {

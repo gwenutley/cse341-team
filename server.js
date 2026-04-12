@@ -4,6 +4,10 @@ const cors = require('cors')
 const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('./swagger_output.json')
 const db = require('./database')
+const {
+  errorHandler,
+  notFoundHandler,
+} = require('./middleware/error.middleware')
 
 const app = express()
 
@@ -28,6 +32,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 //Routes
 app.use('/', require('./routes'))
+app.use(notFoundHandler)
+app.use(errorHandler)
 
 //Function that connects to the database and starts the server
 async function startServer() {

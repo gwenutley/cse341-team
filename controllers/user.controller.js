@@ -1,4 +1,5 @@
 const userModel = require('../model/user.model')
+const ApiError = require('../utils/apiError')
 
 const getAll = async (_req, res) => {
   /*
@@ -14,12 +15,8 @@ const getAll = async (_req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  try {
-    const users = await userModel.findAll()
-    res.status(200).json(users)
-  } catch (error) {
-    res.status(500).json({ message: error.message })
-  }
+  const users = await userModel.findAll()
+  res.status(200).json(users)
 }
 
 const getById = async (req, res) => {
@@ -41,15 +38,12 @@ const getById = async (req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  try {
-    const user = await userModel.findById(req.params.id)
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' })
-    }
-    res.status(200).json(user)
-  } catch (error) {
-    res.status(500).json({ message: error.message })
+  const user = await userModel.findById(req.params.id)
+  if (!user) {
+    throw new ApiError(404, 'User not found')
   }
+
+  res.status(200).json(user)
 }
 
 const update = async (req, res) => {
@@ -80,22 +74,12 @@ const update = async (req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  try {
-    if (!req.body || Object.keys(req.body).length === 0) {
-      return res.status(400).json({ message: 'Request body cannot be empty' })
-    }
-
-    const user = await userModel.updateById(req.params.id, req.body)
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' })
-    }
-    res.status(200).json(user)
-  } catch (error) {
-    if (error.name === 'ValidationError') {
-      return res.status(400).json({ message: error.message })
-    }
-    res.status(500).json({ message: error.message })
+  const user = await userModel.updateById(req.params.id, req.body)
+  if (!user) {
+    throw new ApiError(404, 'User not found')
   }
+
+  res.status(200).json(user)
 }
 
 const create = async (req, res) => {
@@ -121,19 +105,8 @@ const create = async (req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  try {
-    if (!req.body || Object.keys(req.body).length === 0) {
-      return res.status(400).json({ message: 'Request body cannot be empty' })
-    }
-
-    const user = await userModel.create(req.body)
-    res.status(201).json(user)
-  } catch (error) {
-    if (error.name === 'ValidationError') {
-      return res.status(400).json({ message: error.message })
-    }
-    res.status(500).json({ message: error.message })
-  }
+  const user = await userModel.create(req.body)
+  res.status(201).json(user)
 }
 
 const deleteById = async (req, res) => {
@@ -155,15 +128,12 @@ const deleteById = async (req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  try {
-    const user = await userModel.deleteById(req.params.id)
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' })
-    }
-    res.status(200).json({ message: 'User deleted successfully' })
-  } catch (error) {
-    res.status(500).json({ message: error.message })
+  const user = await userModel.deleteById(req.params.id)
+  if (!user) {
+    throw new ApiError(404, 'User not found')
   }
+
+  res.status(200).json({ message: 'User deleted successfully' })
 }
 
 module.exports = {

@@ -1,4 +1,5 @@
 const dailyLogModel = require('../model/dailyLog.model')
+const ApiError = require('../utils/apiError')
 
 const getAll = async (_req, res) => {
   /*
@@ -14,12 +15,8 @@ const getAll = async (_req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  try {
-    const dailyLogs = await dailyLogModel.findAll()
-    res.status(200).json(dailyLogs)
-  } catch (error) {
-    res.status(500).json({ message: error.message })
-  }
+  const dailyLogs = await dailyLogModel.findAll()
+  res.status(200).json(dailyLogs)
 }
 
 const getById = async (req, res) => {
@@ -41,15 +38,12 @@ const getById = async (req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  try {
-    const dailyLog = await dailyLogModel.findById(req.params.id)
-    if (!dailyLog) {
-      return res.status(404).json({ message: 'Daily log not found' })
-    }
-    res.status(200).json(dailyLog)
-  } catch (error) {
-    res.status(500).json({ message: error.message })
+  const dailyLog = await dailyLogModel.findById(req.params.id)
+  if (!dailyLog) {
+    throw new ApiError(404, 'Daily log not found')
   }
+
+  res.status(200).json(dailyLog)
 }
 
 const update = async (req, res) => {
@@ -80,22 +74,12 @@ const update = async (req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  try {
-    if (!req.body || Object.keys(req.body).length === 0) {
-      return res.status(400).json({ message: 'Request body cannot be empty' })
-    }
-
-    const dailyLog = await dailyLogModel.updateById(req.params.id, req.body)
-    if (!dailyLog) {
-      return res.status(404).json({ message: 'Daily log not found' })
-    }
-    res.status(200).json(dailyLog)
-  } catch (error) {
-    if (error.name === 'ValidationError') {
-      return res.status(400).json({ message: error.message })
-    }
-    res.status(500).json({ message: error.message })
+  const dailyLog = await dailyLogModel.updateById(req.params.id, req.body)
+  if (!dailyLog) {
+    throw new ApiError(404, 'Daily log not found')
   }
+
+  res.status(200).json(dailyLog)
 }
 
 const create = async (req, res) => {
@@ -121,19 +105,8 @@ const create = async (req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  try {
-    if (!req.body || Object.keys(req.body).length === 0) {
-      return res.status(400).json({ message: 'Request body cannot be empty' })
-    }
-
-    const dailyLog = await dailyLogModel.create(req.body)
-    res.status(201).json(dailyLog)
-  } catch (error) {
-    if (error.name === 'ValidationError') {
-      return res.status(400).json({ message: error.message })
-    }
-    res.status(500).json({ message: error.message })
-  }
+  const dailyLog = await dailyLogModel.create(req.body)
+  res.status(201).json(dailyLog)
 }
 
 const deleteById = async (req, res) => {
@@ -155,15 +128,12 @@ const deleteById = async (req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  try {
-    const dailyLog = await dailyLogModel.deleteById(req.params.id)
-    if (!dailyLog) {
-      return res.status(404).json({ message: 'Daily log not found' })
-    }
-    res.status(200).json({ message: 'Daily log deleted successfully' })
-  } catch (error) {
-    res.status(500).json({ message: error.message })
+  const dailyLog = await dailyLogModel.deleteById(req.params.id)
+  if (!dailyLog) {
+    throw new ApiError(404, 'Daily log not found')
   }
+
+  res.status(200).json({ message: 'Daily log deleted successfully' })
 }
 
 module.exports = {

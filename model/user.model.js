@@ -15,6 +15,8 @@ const create = async userData => {
 const updateById = async (id, updateData) => {
   return await User.findByIdAndUpdate(id, updateData, {
     returnDocument: 'after',
+    runValidators: true,
+    context: 'query',
   })
 }
 

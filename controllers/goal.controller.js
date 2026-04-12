@@ -1,4 +1,5 @@
 const goalModel = require('../model/goal.model')
+const ApiError = require('../utils/apiError')
 
 const getAll = async (_req, res) => {
   /*
@@ -14,12 +15,8 @@ const getAll = async (_req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  try {
-    const goals = await goalModel.findAll()
-    res.status(200).json(goals)
-  } catch (error) {
-    res.status(500).json({ message: error.message })
-  }
+  const goals = await goalModel.findAll()
+  res.status(200).json(goals)
 }
 
 const getById = async (req, res) => {
@@ -41,15 +38,12 @@ const getById = async (req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  try {
-    const goal = await goalModel.findById(req.params.id)
-    if (!goal) {
-      return res.status(404).json({ message: 'Goal not found' })
-    }
-    res.status(200).json(goal)
-  } catch (error) {
-    res.status(500).json({ message: error.message })
+  const goal = await goalModel.findById(req.params.id)
+  if (!goal) {
+    throw new ApiError(404, 'Goal not found')
   }
+
+  res.status(200).json(goal)
 }
 
 const update = async (req, res) => {
@@ -80,22 +74,12 @@ const update = async (req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  try {
-    if (!req.body || Object.keys(req.body).length === 0) {
-      return res.status(400).json({ message: 'Request body cannot be empty' })
-    }
-
-    const goal = await goalModel.updateById(req.params.id, req.body)
-    if (!goal) {
-      return res.status(404).json({ message: 'Goal not found' })
-    }
-    res.status(200).json(goal)
-  } catch (error) {
-    if (error.name === 'ValidationError') {
-      return res.status(400).json({ message: error.message })
-    }
-    res.status(500).json({ message: error.message })
+  const goal = await goalModel.updateById(req.params.id, req.body)
+  if (!goal) {
+    throw new ApiError(404, 'Goal not found')
   }
+
+  res.status(200).json(goal)
 }
 
 const create = async (req, res) => {
@@ -121,19 +105,8 @@ const create = async (req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  try {
-    if (!req.body || Object.keys(req.body).length === 0) {
-      return res.status(400).json({ message: 'Request body cannot be empty' })
-    }
-
-    const goal = await goalModel.create(req.body)
-    res.status(201).json(goal)
-  } catch (error) {
-    if (error.name === 'ValidationError') {
-      return res.status(400).json({ message: error.message })
-    }
-    res.status(500).json({ message: error.message })
-  }
+  const goal = await goalModel.create(req.body)
+  res.status(201).json(goal)
 }
 
 const deleteById = async (req, res) => {
@@ -155,15 +128,12 @@ const deleteById = async (req, res) => {
       schema: { $ref: '#/definitions/Error' }
     }
   */
-  try {
-    const goal = await goalModel.deleteById(req.params.id)
-    if (!goal) {
-      return res.status(404).json({ message: 'Goal not found' })
-    }
-    res.status(200).json({ message: 'Goal deleted successfully' })
-  } catch (error) {
-    res.status(500).json({ message: error.message })
+  const goal = await goalModel.deleteById(req.params.id)
+  if (!goal) {
+    throw new ApiError(404, 'Goal not found')
   }
+
+  res.status(200).json({ message: 'Goal deleted successfully' })
 }
 
 module.exports = {
