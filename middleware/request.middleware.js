@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const ApiError = require('../utils/apiError')
 
-const requireBody = (req, _res, next) => {
+const requireBody = (req, res, next) => {
   if (!req.body || Array.isArray(req.body) || typeof req.body !== 'object') {
     return next(new ApiError(400, 'Request body must be a JSON object'))
   }
@@ -13,7 +13,8 @@ const requireBody = (req, _res, next) => {
   next()
 }
 
-const validateObjectIdParam = (req, _res, next, value, paramName) => {
+const validateObjectIdParam = (req, res, next, value) => {
+  const paramName = req.params.param
   if (!mongoose.isValidObjectId(value)) {
     return next(
       new ApiError(400, `Invalid ${paramName}`, [
