@@ -1,6 +1,7 @@
 const goalModel = require('../model/goal.model')
+const ApiError = require('../utils/apiError')
 
-const getAll = async (_req, res) => {
+const getAll = async (_req, res, next) => {
   /*
     #swagger.tags = ['Goals']
     #swagger.summary = 'Retrieve all goals'
@@ -18,11 +19,11 @@ const getAll = async (_req, res) => {
     const goals = await goalModel.findAll()
     res.status(200).json(goals)
   } catch (error) {
-    res.status(500).json({ message: error.message })
+    next(error)
   }
 }
 
-const getById = async (req, res) => {
+const getById = async (req, res, next) => {
   /*
     #swagger.tags = ['Goals']
     #swagger.summary = 'Retrieve a single goal'
@@ -44,15 +45,15 @@ const getById = async (req, res) => {
   try {
     const goal = await goalModel.findById(req.params.id)
     if (!goal) {
-      return res.status(404).json({ message: 'Goal not found' })
+      throw new ApiError(404, 'Goal not found')
     }
     res.status(200).json(goal)
   } catch (error) {
-    res.status(500).json({ message: error.message })
+    next(error)
   }
 }
 
-const update = async (req, res) => {
+const update = async (req, res, next) => {
   /*
     #swagger.tags = ['Goals']
     #swagger.summary = 'Update an existing goal'
@@ -81,24 +82,17 @@ const update = async (req, res) => {
     }
   */
   try {
-    if (!req.body || Object.keys(req.body).length === 0) {
-      return res.status(400).json({ message: 'Request body cannot be empty' })
-    }
-
     const goal = await goalModel.updateById(req.params.id, req.body)
     if (!goal) {
-      return res.status(404).json({ message: 'Goal not found' })
+      throw new ApiError(404, 'Goal not found')
     }
     res.status(200).json(goal)
   } catch (error) {
-    if (error.name === 'ValidationError') {
-      return res.status(400).json({ message: error.message })
-    }
-    res.status(500).json({ message: error.message })
+    next(error)
   }
 }
 
-const create = async (req, res) => {
+const create = async (req, res, next) => {
   /*
     #swagger.tags = ['Goals']
     #swagger.summary = 'Create a new goal'
@@ -122,21 +116,14 @@ const create = async (req, res) => {
     }
   */
   try {
-    if (!req.body || Object.keys(req.body).length === 0) {
-      return res.status(400).json({ message: 'Request body cannot be empty' })
-    }
-
     const goal = await goalModel.create(req.body)
     res.status(201).json(goal)
   } catch (error) {
-    if (error.name === 'ValidationError') {
-      return res.status(400).json({ message: error.message })
-    }
-    res.status(500).json({ message: error.message })
+    next(error)
   }
 }
 
-const deleteById = async (req, res) => {
+const deleteById = async (req, res, next) => {
   /*
     #swagger.tags = ['Goals']
     #swagger.summary = 'Delete a goal'
@@ -158,11 +145,11 @@ const deleteById = async (req, res) => {
   try {
     const goal = await goalModel.deleteById(req.params.id)
     if (!goal) {
-      return res.status(404).json({ message: 'Goal not found' })
+      throw new ApiError(404, 'Goal not found')
     }
     res.status(200).json({ message: 'Goal deleted successfully' })
   } catch (error) {
-    res.status(500).json({ message: error.message })
+    next(error)
   }
 }
 

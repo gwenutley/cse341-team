@@ -15,6 +15,8 @@ const create = async goalData => {
 const updateById = async (id, updateData) => {
   return await Goal.findByIdAndUpdate(id, updateData, {
     returnDocument: 'after',
+    runValidators: true,
+    context: 'query',
   })
 }
 

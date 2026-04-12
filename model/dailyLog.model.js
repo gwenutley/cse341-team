@@ -15,6 +15,8 @@ const create = async dailyLogData => {
 const updateById = async (id, updateData) => {
   return await DailyLog.findByIdAndUpdate(id, updateData, {
     returnDocument: 'after',
+    runValidators: true,
+    context: 'query',
   })
 }
 

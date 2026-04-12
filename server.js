@@ -7,6 +7,10 @@ const db = require('./database')
 const passport = require('passport')
 const session = require('express-session')
 const GitHubStrategy = require('passport-github2').Strategy
+const {
+  errorHandler,
+  notFoundHandler,
+} = require('./middleware/error.middleware')
 
 const app = express()
 
@@ -97,6 +101,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 //Routes
 app.use('/', require('./routes'))
+app.use(notFoundHandler)
+app.use(errorHandler)
 
 //Function that connects to the database and starts the server
 async function startServer() {
