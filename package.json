@@ -15,8 +15,8 @@
   "type": "commonjs",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node --watch server.js",
+    "start": "node index.js",
+    "dev": "node --watch index.js",
     "format": "prettier --write .",
     "lint-staged": "lint-staged",
     "seed": "node database/seed/seed.js",
