@@ -15,14 +15,12 @@
   ],
   "goals": [
     {
-      "userId": "69d3e2645c93244b93389617",
       "calories": 2200,
       "protein": 130,
       "carbs": 250,
       "fat": 70
     },
     {
-      "userId": "69d3e2775c93244b93389618",
       "calories": 1600,
       "protein": 100,
       "carbs": 150,
@@ -31,32 +29,12 @@
   ],
   "daily_logs": [
     {
-      "userId": "69d3e2645c93244b93389617",
       "date": "2024-06-01",
-      "foods": [
-        {
-          "foodId": "69d3e2905c93244b93389619",
-          "quantity": 2
-        },
-        {
-          "foodId": "69d3e2905c93244b9338961a",
-          "quantity": 1
-        }
-      ]
+      "foods": [{ "quantity": 2 }, { "quantity": 1 }]
     },
     {
-      "userId": "69d3e2775c93244b93389618",
       "date": "2024-06-01",
-      "foods": [
-        {
-          "foodId": "69d3e2905c93244b93389619",
-          "quantity": 1
-        },
-        {
-          "foodId": "69d3e2905c93244b9338961a",
-          "quantity": 2
-        }
-      ]
+      "foods": [{ "quantity": 1 }, { "quantity": 2 }]
     }
   ],
   "foods": [

@@ -1,5 +1,10 @@
 const mongoose = require('mongoose')
 
+const logger = {
+  info: message => process.env.NODE_ENV !== 'test' && console.log(message),
+  error: message => process.env.NODE_ENV !== 'test' && console.error(message),
+}
+
 const connect = async () => {
   try {
     const uri =
@@ -7,9 +12,10 @@ const connect = async () => {
         ? process.env.MONGO_TEST_URI
         : process.env.MONGO_URI
     await mongoose.connect(uri)
-    console.log('MongoDB connected')
+
+    logger.info('MongoDB connected')
   } catch (err) {
-    console.error(err.message)
+    logger.error(err.message)
     throw err
   }
 }
@@ -17,9 +23,9 @@ const connect = async () => {
 const close = async () => {
   try {
     await mongoose.connection.close()
-    console.log('MongoDB connection closed')
+    logger.info('MongoDB connection closed')
   } catch (err) {
-    console.error(err.message)
+    logger.error(err.message)
     throw err
   }
 }
@@ -30,9 +36,9 @@ const clear = async () => {
     for (const key in collections) {
       await collections[key].deleteMany()
     }
-    console.log('MongoDB collections cleared')
+    logger.info('MongoDB collections cleared')
   } catch (err) {
-    console.error(err.message)
+    logger.error(err.message)
     throw err
   }
 }
