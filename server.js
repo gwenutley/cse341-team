@@ -8,8 +8,8 @@ const {
   errorHandler,
   notFoundHandler,
 } = require('./middleware/error.middleware')
-const passport = require('passport')
 const session = require('express-session')
+const passport = require('./config/passport')
 
 const app = express()
 
@@ -24,7 +24,7 @@ app
     session({
       secret: 'secret',
       resave: false,
-      saveUninitialized: true,
+      saveUninitialized: false,
     })
   )
   //initialize passport
