@@ -2,13 +2,10 @@ const mongoose = require('mongoose')
 
 const goalSchema = new mongoose.Schema(
   {
-    userId: {
-      type: String,
-      required: [true, 'User ID is required'],
-      validate: {
-        validator: value => mongoose.isValidObjectId(value),
-        message: 'User ID must be a valid MongoDB ObjectId',
-      },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: [true, 'User is required'],
     },
     calories: {
       type: Number,
