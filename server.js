@@ -4,9 +4,8 @@ const cors = require('cors')
 const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('./swagger_output.json')
 const db = require('./database')
-const passport = require('passport')
 const session = require('express-session')
-const GitHubStrategy = require('passport-github2').Strategy
+const passport = require('./config/passport')
 const {
   errorHandler,
   notFoundHandler,
@@ -26,7 +25,7 @@ app
     session({
       secret: 'secret',
       resave: false,
-      saveUninitialized: true,
+      saveUninitialized: false,
     })
   )
   //initialize passport
@@ -42,29 +41,6 @@ app.use(
     optionsSuccessStatus: 200,
   })
 )
-
-//authenticate user with GitHub using passport
-passport.use(
-  new GitHubStrategy(
-    {
-      clientID: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      callbackURL: process.env.CALLBACK_URL,
-    },
-    //function that will be called when the user is authenticated
-    function (accessToken, refreshToken, profile, done) {
-      return done(null, profile)
-    }
-  )
-)
-
-//serialize and deserialize user
-passport.serializeUser((user, done) => {
-  done(null, user)
-})
-passport.deserializeUser((user, done) => {
-  done(null, user)
-})
 
 //display if user is logged in
 app.get('/', (req, res) => {
@@ -91,7 +67,11 @@ app.get(
     session: false,
   }),
   (req, res) => {
-    req.session.user = req.user
+    req.session.user = {
+      id: req.user.id,
+      username: req.user.username,
+      displayName: req.user.displayName,
+    }
     res.redirect('/')
   }
 )
