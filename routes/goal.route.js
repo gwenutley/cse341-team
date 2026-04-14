@@ -7,7 +7,6 @@ const {
 } = require('../middleware/request.middleware')
 
 router.param('id', validateObjectIdParam)
-const { isAuthenticated } = require('../middleware/authenticate')
 
 router.get('/', goalController.getAll)
 router.get('/:id', goalController.getById)

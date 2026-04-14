@@ -10,8 +10,6 @@ const {
   errorHandler,
   notFoundHandler,
 } = require('./middleware/error.middleware')
-const session = require('express-session')
-const passport = require('./config/passport')
 
 const app = express()
 

@@ -10,8 +10,6 @@ const {
 
 router.param('id', validateObjectIdParam)
 
-const { isAuthenticated } = require('../middleware/authenticate')
-
 router.get('/', userController.getAll)
 router.get('/:id', userController.getById)
 router.put('/:id', isAuthenticated, requireBody, userController.update)
