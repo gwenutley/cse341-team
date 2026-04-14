@@ -7,11 +7,13 @@ const {
 
 router.param('id', validateObjectIdParam)
 
+const { isAuthenticated } = require('../middleware/authenticate')
+
 router.get('/', foodController.getAll)
 router.get('/:id', foodController.getById)
 
-router.put('/:id', requireBody, foodController.update)
-router.post('/', requireBody, foodController.create)
-router.delete('/:id', foodController.deleteById)
+router.put('/:id', isAuthenticated, requireBody, foodController.update)
+router.post('/', isAuthenticated, requireBody, foodController.create)
+router.delete('/:id', isAuthenticated, foodController.deleteById)
 
 module.exports = router

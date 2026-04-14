@@ -4,13 +4,15 @@
       "username": "admin",
       "email": "admin@example.com",
       "role": "admin",
-      "password": "password123"
+      "password": "password123",
+      "githubId": "12345678"
     },
     {
       "username": "user",
       "email": "user@example.com",
       "role": "user",
-      "password": "password123"
+      "password": "password123",
+      "githubId": "87654321"
     }
   ],
   "goals": [

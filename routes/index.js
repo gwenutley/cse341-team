@@ -6,9 +6,11 @@ router.get('/', (_req, res) => {
     <p>Please visit the <a href="/api-docs">API Documentation</a> to view the full docs and available endpoints.</p>
   `)
 })
+
 router.use('/foods', require('./food.route'))
 router.use('/users', require('./user.route'))
 router.use('/goals', require('./goal.route'))
 router.use('/daily-logs', require('./dailyLog.route'))
+router.use('/auth', require('./auth.route'))
 
 module.exports = router
