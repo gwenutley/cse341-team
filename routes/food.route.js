@@ -9,7 +9,7 @@ router.param('id', validateObjectIdParam)
 
 const { isAuthenticated } = require('../middleware/authenticate')
 
-router.get('/', foodController.getAll)
+router.get('/', isAuthenticated, foodController.getAll)
 router.get('/:id', foodController.getById)
 
 

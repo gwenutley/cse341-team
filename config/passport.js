@@ -21,7 +21,7 @@ passport.use(
             githubId: profile.id,
           })
         }
-
+        console.log('successfully authenticated user:', user)
         return done(null, user)
       } catch (err) {
         return done(err, null)
