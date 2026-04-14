@@ -1,5 +1,6 @@
 const passport = require('passport')
 const GitHubStrategy = require('passport-github2').Strategy
+const User = require('../database/schemas/user.schema')
 
 //authenticate user with GitHub using passport
 passport.use(
@@ -10,15 +11,27 @@ passport.use(
       callbackURL: process.env.CALLBACK_URL,
     },
     //function that will be called when the user is authenticated
-    function (accessToken, refreshToken, profile, done) {
-      return done(null, profile)
+    async function (accessToken, refreshToken, profile, done) {
+      try {
+        let user = await User.findOne({ githubId: profile.id })
+        if (!user) {
+          user = await User.create({
+            username: profile.username,
+            email: `${profile.username}@github.com`,
+            githubId: profile.id,
+          })
+        }
+
+        return done(null, user)
+      } catch (err) {
+        return done(err, null)
+      }
     }
   )
 )
 
-//serialize and deserialize user
 passport.serializeUser((user, done) => {
-  done(null, user)
+  done(null, user.id)
 })
 
 passport.deserializeUser(async (id, done) => {

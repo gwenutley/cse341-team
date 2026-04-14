@@ -3,12 +3,11 @@ const passport = require('passport')
 
 //authentication routes
 router.get('/login', passport.authenticate('github', { scope: ['user:email'] }))
-router.get('/logout', (req, res) => {
-  req.session.destroy(err => {
+router.get('/logout', (req, res, next) => {
+  req.logout(function (err) {
     if (err) {
-      return res.status(500).json('Error logging out.')
+      return next(err)
     }
-    res.clearCookie('connect.sid')
     res.redirect('/')
   })
 })
