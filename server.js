@@ -13,11 +13,9 @@ const app = express()
 
 const port = process.env.PORT || 2000
 
-//Middlewares
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-// CORS Configuration
 app.use(
   cors({
     origin: '*',
@@ -27,15 +25,12 @@ app.use(
   })
 )
 
-// Swagger Documentation
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
-//Routes
 app.use('/', require('./routes'))
 app.use(notFoundHandler)
 app.use(errorHandler)
 
-//Function that connects to the database and starts the server
 async function startServer() {
   try {
     await db.connect()
@@ -47,4 +42,4 @@ async function startServer() {
   }
 }
 
-startServer().catch(console.error)
+module.exports = { app, startServer }

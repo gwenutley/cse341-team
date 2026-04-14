@@ -1,0 +1,11 @@
+@port = 2000
+@baseUrl = http://localhost:{{port}}
+
+### Health Check
+GET {{baseUrl}}/
+
+// Detailed tests split into:
+// - foods.rest
+// - users.rest
+// - goals.rest
+// - daily-logs.rest

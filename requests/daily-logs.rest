@@ -1,0 +1,50 @@
+@port = 2000
+@baseUrl = http://localhost:{{port}}
+@logId = 69d955872b941fa341866ccb
+
+### Get all daily logs
+GET {{baseUrl}}/daily-logs
+
+### Get daily log by id
+GET {{baseUrl}}/daily-logs/{{logId}}
+
+### Create a new daily log
+POST {{baseUrl}}/daily-logs HTTP/1.1
+Content-Type: application/json
+
+{
+  "user": "69d3e2645c93244b93389617",
+  "date": "2024-06-02",
+  "foods": [
+    {
+      "food": "69d3e2905c93244b93389619",
+      "quantity": 2
+    },
+    {
+      "food": "69d3e2905c93244b9338961a",
+      "quantity": 1
+    }
+  ]
+}
+
+### Update a daily log by id
+PUT {{baseUrl}}/daily-logs/{{logId}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "user": "69d3e2645c93244b93389617",
+  "date": "2024-06-02",
+  "foods": [
+    {
+      "food": "69d3e2905c93244b93389619",
+      "quantity": 3
+    },
+    {
+      "food": "69d3e2905c93244b9338961a",
+      "quantity": 3
+    }
+  ]
+}
+
+### Delete a daily log by id
+DELETE {{baseUrl}}/daily-logs/{{logId}}
