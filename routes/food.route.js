@@ -9,9 +9,8 @@ router.param('id', validateObjectIdParam)
 
 const { isAuthenticated } = require('../middleware/authenticate')
 
-router.get('/', isAuthenticated, foodController.getAll)
+router.get('/', foodController.getAll)
 router.get('/:id', foodController.getById)
-
 
 router.put('/:id', isAuthenticated, requireBody, foodController.update)
 router.post('/', isAuthenticated, requireBody, foodController.create)

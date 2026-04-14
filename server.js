@@ -4,6 +4,8 @@ const cors = require('cors')
 const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('./swagger_output.json')
 const db = require('./database')
+const session = require('express-session')
+const passport = require('./config/passport')
 const {
   errorHandler,
   notFoundHandler,
