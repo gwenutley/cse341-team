@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const bycrypt = require('bcryptjs')
 
 const userSchema = new mongoose.Schema(
   {
@@ -32,9 +33,11 @@ const userSchema = new mongoose.Schema(
       trim: true,
       minlength: [8, 'Password must be at least 8 characters long'],
     },
-    googleId: {
+    githubId: {
       type: String,
       trim: true,
+      required: true,
+      unique: true,
     },
   },
   {

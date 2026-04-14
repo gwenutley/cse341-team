@@ -44,14 +44,12 @@ app.use(
 
 //display if user is logged in
 app.get('/', (req, res) => {
-  const user = req.session?.user
+  const user = req.user
   if (!user) {
     return res.send('Logged Out')
   }
   res.send(
-    user
-      ? `Logged in as ${user.displayName || user.username || user.id}`
-      : 'Logged Out'
+    `Logged in as ${user.displayName || user.username || user.email || user.id}`
   )
 })
 
@@ -64,14 +62,8 @@ app.get(
   '/auth/github/callback',
   passport.authenticate('github', {
     failureRedirect: '/api-docs',
-    session: false,
   }),
   (req, res) => {
-    req.session.user = {
-      id: req.user.id,
-      username: req.user.username,
-      displayName: req.user.displayName,
-    }
     res.redirect('/')
   }
 )
