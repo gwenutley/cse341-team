@@ -58,6 +58,7 @@ const update = async (req, res, next) => {
     #swagger.tags = ['DailyLogs']
     #swagger.summary = 'Update an existing daily log'
     #swagger.description = 'Update the details of a daily log by its ID'
+    #swagger.security = [{ "github_auth": [] }]
     #swagger.parameters['id'] = { description: 'Daily Log ID' }
     #swagger.parameters['body'] = {
       in: 'body',
@@ -72,6 +73,7 @@ const update = async (req, res, next) => {
       description: 'Invalid input or empty body',
       schema: { $ref: '#/definitions/Error' }
     }
+    #swagger.responses[401] = { description: 'Unauthorized' }
     #swagger.responses[404] = {
       description: 'Daily log not found',
       schema: { $ref: '#/definitions/Error' }
@@ -97,6 +99,7 @@ const create = async (req, res, next) => {
     #swagger.tags = ['DailyLogs']
     #swagger.summary = 'Create a new daily log'
     #swagger.description = 'Add a new daily log to the database'
+    #swagger.security = [{ "github_auth": [] }]
     #swagger.parameters['body'] = {
       in: 'body',
       description: 'Daily Log object to be created',
@@ -110,6 +113,7 @@ const create = async (req, res, next) => {
       description: 'Invalid input or empty body',
       schema: { $ref: '#/definitions/Error' }
     }
+    #swagger.responses[401] = { description: 'Unauthorized' }
     #swagger.responses[500] = {
       description: 'Internal server error',
       schema: { $ref: '#/definitions/Error' }
@@ -128,11 +132,13 @@ const deleteById = async (req, res, next) => {
     #swagger.tags = ['DailyLogs']
     #swagger.summary = 'Delete a daily log'
     #swagger.description = 'Remove a daily log from the database by its ID'
+    #swagger.security = [{ "github_auth": [] }]
     #swagger.parameters['id'] = { description: 'Daily Log ID' }
     #swagger.responses[200] = {
       description: 'Daily log deleted successfully',
       schema: { message: 'Daily log deleted successfully' }
     }
+    #swagger.responses[401] = { description: 'Unauthorized' }
     #swagger.responses[404] = {
       description: 'Daily log not found',
       schema: { $ref: '#/definitions/Error' }

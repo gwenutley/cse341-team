@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true }))
 app
   .use(
     session({
-      secret: 'secret',
+      secret: process.env.SESSION_SECRET || 'secret',
       resave: false,
       saveUninitialized: false,
     })
@@ -41,7 +41,21 @@ app.use(
   })
 )
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+app.use(
+  '/api-docs',
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocument, {
+    swaggerOptions: {
+      persistAuthorization: true,
+      oauth2RedirectUrl: 'http://localhost:2000/api-docs/oauth2-redirect.html',
+      oauth: {
+        clientId: process.env.GITHUB_CLIENT_ID,
+        clientSecret: process.env.GITHUB_CLIENT_SECRET,
+        appName: 'CSE341 Team API',
+      },
+    },
+  })
+)
 
 app.use('/', require('./routes'))
 app.use(notFoundHandler)

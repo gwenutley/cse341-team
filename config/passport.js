@@ -11,7 +11,7 @@ passport.use(
       callbackURL: process.env.CALLBACK_URL,
     },
     //function that will be called when the user is authenticated
-    async function (accessToken, refreshToken, profile, done) {
+    async function (_accessToken, _refreshToken, profile, done) {
       try {
         let user = await User.findOne({ githubId: profile.id })
         if (!user) {
