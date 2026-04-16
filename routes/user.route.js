@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const userController = require('../controllers/user.controller')
-const { isAuthenticated } = require('../middleware/authenticate')
+const { isAuthenticated, isAdmin } = require('../middleware/authenticate')
 
 const {
   requireBody,
@@ -10,7 +10,7 @@ const {
 
 router.param('id', validateObjectIdParam)
 
-router.get('/', userController.getAll)
+router.get('/', isAuthenticated, isAdmin, userController.getAll)
 router.get('/:id', userController.getById)
 router.put('/:id', isAuthenticated, requireBody, userController.update)
 router.post('/', isAuthenticated, requireBody, userController.create)

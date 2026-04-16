@@ -31,6 +31,24 @@ app
   .use(passport.initialize())
   .use(passport.session())
 
+// Mock authentication for tests
+if (process.env.NODE_ENV === 'test') {
+  app.use((req, res, next) => {
+    if (req.headers['x-test-user-id']) {
+      const User = require('./database/schemas/user.schema')
+      User.findById(req.headers['x-test-user-id']).then(user => {
+        if (user) {
+          req.user = user
+          req.isAuthenticated = () => true
+        }
+        next()
+      })
+    } else {
+      next()
+    }
+  })
+}
+
 // CORS Configuration
 app.use(
   cors({

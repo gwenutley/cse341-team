@@ -57,7 +57,7 @@ const update = async (req, res, next) => {
   /*
     #swagger.tags = ['Foods']
     #swagger.summary = 'Update an existing food'
-    #swagger.description = 'Update the details of a food item by its ID'
+    #swagger.description = 'Update the details of a food item by its ID. Requires authentication.'
     #swagger.security = [{ "github_auth": [] }]
     #swagger.parameters['id'] = { description: 'Food ID' }
     #swagger.parameters['body'] = {
@@ -98,7 +98,7 @@ const create = async (req, res, next) => {
   /*
     #swagger.tags = ['Foods']
     #swagger.summary = 'Create a new food'
-    #swagger.description = 'Add a new food item to the database'
+    #swagger.description = 'Add a new food item to the database. Requires authentication.'
     #swagger.security = [{ "github_auth": [] }]
     #swagger.parameters['body'] = {
       in: 'body',
@@ -131,7 +131,7 @@ const deleteById = async (req, res, next) => {
   /*
     #swagger.tags = ['Foods']
     #swagger.summary = 'Delete a food item'
-    #swagger.description = 'Remove a food item from the database by its ID'
+    #swagger.description = 'Remove a food item from the database by its ID. Requires authentication.'
     #swagger.security = [{ "github_auth": [] }]
     #swagger.parameters['id'] = { description: 'Food ID' }
     #swagger.responses[200] = {

@@ -9,8 +9,8 @@ router.param('id', validateObjectIdParam)
 
 const { isAuthenticated } = require('../middleware/authenticate')
 
-router.get('/', dailyLogController.getAll)
-router.get('/:id', dailyLogController.getById)
+router.get('/', isAuthenticated, dailyLogController.getAll)
+router.get('/:id', isAuthenticated, dailyLogController.getById)
 
 router.put('/:id', isAuthenticated, requireBody, dailyLogController.update)
 router.post('/', isAuthenticated, requireBody, dailyLogController.create)

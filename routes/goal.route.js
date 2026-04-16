@@ -8,8 +8,8 @@ const {
 
 router.param('id', validateObjectIdParam)
 
-router.get('/', goalController.getAll)
-router.get('/:id', goalController.getById)
+router.get('/', isAuthenticated, goalController.getAll)
+router.get('/:id', isAuthenticated, goalController.getById)
 
 router.put('/:id', isAuthenticated, requireBody, goalController.update)
 router.post('/', isAuthenticated, requireBody, goalController.create)

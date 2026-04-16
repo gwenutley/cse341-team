@@ -64,19 +64,22 @@ const doc = {
       googleId: 'google_id_12345',
     },
     DailyLog: {
-      $userId: '6615f3c2a9b1c8e4b1234567',
-      $foodId: '6615f3c2a9b1c8e4b7654321',
+      $user: '6615f3c2a9b1c8e4b1234567',
       $date: '2026-04-10',
-      $quantity: 2,
+      $foods: [
+        {
+          $food: '6615f3c2a9b1c8e4b7654321',
+          $quantity: 2,
+        },
+      ],
     },
 
     Goal: {
-      $userId: '6615f3c2a9b1c8e4b1234567',
-      calories: 2000,
-      protein: 150,
-      carbs: 250,
-      fat: 70,
-      fiber: 30,
+      $user: '6615f3c2a9b1c8e4b1234567',
+      $calories: 2000,
+      $protein: 150,
+      $carbs: 250,
+      $fat: 70,
     },
     Error: {
       message: 'Error message',
