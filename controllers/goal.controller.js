@@ -58,6 +58,7 @@ const update = async (req, res, next) => {
     #swagger.tags = ['Goals']
     #swagger.summary = 'Update an existing goal'
     #swagger.description = 'Update the details of a goal by its ID'
+    #swagger.security = [{ "github_auth": [] }]
     #swagger.parameters['id'] = { description: 'Goal ID' }
     #swagger.parameters['body'] = {
       in: 'body',
@@ -72,6 +73,7 @@ const update = async (req, res, next) => {
       description: 'Invalid input or empty body',
       schema: { $ref: '#/definitions/Error' }
     }
+    #swagger.responses[401] = { description: 'Unauthorized' }
     #swagger.responses[404] = {
       description: 'Goal not found',
       schema: { $ref: '#/definitions/Error' }
@@ -97,6 +99,7 @@ const create = async (req, res, next) => {
     #swagger.tags = ['Goals']
     #swagger.summary = 'Create a new goal'
     #swagger.description = 'Add a new goal to the database'
+    #swagger.security = [{ "github_auth": [] }]
     #swagger.parameters['body'] = {
       in: 'body',
       description: 'Goal object to be created',
@@ -110,6 +113,7 @@ const create = async (req, res, next) => {
       description: 'Invalid input or empty body',
       schema: { $ref: '#/definitions/Error' }
     }
+    #swagger.responses[401] = { description: 'Unauthorized' }
     #swagger.responses[500] = {
       description: 'Internal server error',
       schema: { $ref: '#/definitions/Error' }
@@ -128,11 +132,13 @@ const deleteById = async (req, res, next) => {
     #swagger.tags = ['Goals']
     #swagger.summary = 'Delete a goal'
     #swagger.description = 'Remove a goal from the database by its ID'
+    #swagger.security = [{ "github_auth": [] }]
     #swagger.parameters['id'] = { description: 'Goal ID' }
     #swagger.responses[200] = {
       description: 'Goal deleted successfully',
       schema: { message: 'Goal deleted successfully' }
     }
+    #swagger.responses[401] = { description: 'Unauthorized' }
     #swagger.responses[404] = {
       description: 'Goal not found',
       schema: { $ref: '#/definitions/Error' }

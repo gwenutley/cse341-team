@@ -20,7 +20,30 @@ const doc = {
       name: 'Users',
       description: 'Endpoints for managing user accounts',
     },
+    {
+      name: 'Goals',
+      description: 'Endpoints for managing user goals',
+    },
+    {
+      name: 'DailyLogs',
+      description: 'Endpoints for managing daily food logs',
+    },
+    {
+      name: 'Auth',
+      description: 'Authentication endpoints',
+    },
   ],
+  securityDefinitions: {
+    github_auth: {
+      type: 'oauth2',
+      authorizationUrl: 'https://github.com/login/oauth/authorize',
+      tokenUrl: 'https://github.com/login/oauth/access_token',
+      flow: 'accessCode',
+      scopes: {
+        'user:email': 'read user email',
+      },
+    },
+  },
   definitions: {
     Food: {
       $name: 'Chicken Breast',
@@ -40,7 +63,7 @@ const doc = {
       password: 'hashed_password_here',
       googleId: 'google_id_12345',
     },
-    Log: {
+    DailyLog: {
       $userId: '6615f3c2a9b1c8e4b1234567',
       $foodId: '6615f3c2a9b1c8e4b7654321',
       $date: '2026-04-10',

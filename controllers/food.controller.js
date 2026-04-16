@@ -58,6 +58,7 @@ const update = async (req, res, next) => {
     #swagger.tags = ['Foods']
     #swagger.summary = 'Update an existing food'
     #swagger.description = 'Update the details of a food item by its ID'
+    #swagger.security = [{ "github_auth": [] }]
     #swagger.parameters['id'] = { description: 'Food ID' }
     #swagger.parameters['body'] = {
       in: 'body',
@@ -72,6 +73,7 @@ const update = async (req, res, next) => {
       description: 'Invalid input or empty body',
       schema: { $ref: '#/definitions/Error' }
     }
+    #swagger.responses[401] = { description: 'Unauthorized' }
     #swagger.responses[404] = {
       description: 'Food not found',
       schema: { $ref: '#/definitions/Error' }
@@ -97,6 +99,7 @@ const create = async (req, res, next) => {
     #swagger.tags = ['Foods']
     #swagger.summary = 'Create a new food'
     #swagger.description = 'Add a new food item to the database'
+    #swagger.security = [{ "github_auth": [] }]
     #swagger.parameters['body'] = {
       in: 'body',
       description: 'Food object to be created',
@@ -110,6 +113,7 @@ const create = async (req, res, next) => {
       description: 'Invalid input or empty body',
       schema: { $ref: '#/definitions/Error' }
     }
+    #swagger.responses[401] = { description: 'Unauthorized' }
     #swagger.responses[500] = {
       description: 'Internal server error',
       schema: { $ref: '#/definitions/Error' }
@@ -128,11 +132,13 @@ const deleteById = async (req, res, next) => {
     #swagger.tags = ['Foods']
     #swagger.summary = 'Delete a food item'
     #swagger.description = 'Remove a food item from the database by its ID'
+    #swagger.security = [{ "github_auth": [] }]
     #swagger.parameters['id'] = { description: 'Food ID' }
     #swagger.responses[200] = {
       description: 'Food deleted successfully',
       schema: { message: 'Food deleted successfully' }
     }
+    #swagger.responses[401] = { description: 'Unauthorized' }
     #swagger.responses[404] = {
       description: 'Food not found',
       schema: { $ref: '#/definitions/Error' }

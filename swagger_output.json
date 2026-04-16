@@ -15,9 +15,32 @@
     {
       "name": "Users",
       "description": "Endpoints for managing user accounts"
+    },
+    {
+      "name": "Goals",
+      "description": "Endpoints for managing user goals"
+    },
+    {
+      "name": "DailyLogs",
+      "description": "Endpoints for managing daily food logs"
+    },
+    {
+      "name": "Auth",
+      "description": "Authentication endpoints"
     }
   ],
   "schemes": ["https"],
+  "securityDefinitions": {
+    "github_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "https://github.com/login/oauth/authorize",
+      "tokenUrl": "https://github.com/login/oauth/access_token",
+      "flow": "accessCode",
+      "scopes": {
+        "user:email": "read user email"
+      }
+    }
+  },
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "paths": {
@@ -84,13 +107,21 @@
               "$ref": "#/definitions/Error"
             }
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "500": {
             "description": "Internal server error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           }
-        }
+        },
+        "security": [
+          {
+            "github_auth": []
+          }
+        ]
       }
     },
     "/foods/{id}": {
@@ -162,6 +193,9 @@
               "$ref": "#/definitions/Error"
             }
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "Food not found",
             "schema": {
@@ -174,7 +208,12 @@
               "$ref": "#/definitions/Error"
             }
           }
-        }
+        },
+        "security": [
+          {
+            "github_auth": []
+          }
+        ]
       },
       "delete": {
         "tags": ["Foods"],
@@ -205,6 +244,9 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "Food not found",
             "schema": {
@@ -217,7 +259,12 @@
               "$ref": "#/definitions/Error"
             }
           }
-        }
+        },
+        "security": [
+          {
+            "github_auth": []
+          }
+        ]
       }
     },
     "/users/": {
@@ -273,13 +320,21 @@
               "$ref": "#/definitions/Error"
             }
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "500": {
             "description": "Internal server error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           }
-        }
+        },
+        "security": [
+          {
+            "github_auth": []
+          }
+        ]
       }
     },
     "/users/{id}": {
@@ -351,6 +406,9 @@
               "$ref": "#/definitions/Error"
             }
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "User not found",
             "schema": {
@@ -363,7 +421,12 @@
               "$ref": "#/definitions/Error"
             }
           }
-        }
+        },
+        "security": [
+          {
+            "github_auth": []
+          }
+        ]
       },
       "delete": {
         "tags": ["Users"],
@@ -394,6 +457,9 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "User not found",
             "schema": {
@@ -405,6 +471,485 @@
             "schema": {
               "$ref": "#/definitions/Error"
             }
+          }
+        },
+        "security": [
+          {
+            "github_auth": []
+          }
+        ]
+      }
+    },
+    "/goals/": {
+      "get": {
+        "tags": ["Goals"],
+        "summary": "Retrieve all goals",
+        "description": "Get a list of all goals in the database",
+        "responses": {
+          "200": {
+            "description": "List of goals retrieved successfully",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Goal"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Goals"],
+        "summary": "Create a new goal",
+        "description": "Add a new goal to the database",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Goal object to be  ",
+            "schema": {
+              "$ref": "#/definitions/Goal"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Goal created successfully",
+            "schema": {
+              "$ref": "#/definitions/Goal"
+            }
+          },
+          "400": {
+            "description": "Invalid input or empty body",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        },
+        "security": [
+          {
+            "github_auth": []
+          }
+        ]
+      }
+    },
+    "/goals/{id}": {
+      "get": {
+        "tags": ["Goals"],
+        "summary": "Retrieve a single goal",
+        "description": "Get detailed information about a goal by its ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Goal ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Goal retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/Goal"
+            }
+          },
+          "404": {
+            "description": "Goal not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Goals"],
+        "summary": "Update an existing goal",
+        "description": "Update the details of a goal by its ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Goal ID"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Goal object that needs to be  ",
+            "schema": {
+              "$ref": "#/definitions/Goal"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Goal updated successfully",
+            "schema": {
+              "$ref": "#/definitions/Goal"
+            }
+          },
+          "400": {
+            "description": "Invalid input or empty body",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Goal not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        },
+        "security": [
+          {
+            "github_auth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": ["Goals"],
+        "summary": "Delete a goal",
+        "description": "Remove a goal from the database by its ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Goal ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Goal deleted successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Goal deleted successfully"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Goal not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        },
+        "security": [
+          {
+            "github_auth": []
+          }
+        ]
+      }
+    },
+    "/daily-logs/": {
+      "get": {
+        "tags": ["DailyLogs"],
+        "summary": "Retrieve all daily logs",
+        "description": "Get a list of all daily logs in the database",
+        "responses": {
+          "200": {
+            "description": "List of daily logs retrieved successfully",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/DailyLog"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["DailyLogs"],
+        "summary": "Create a new daily log",
+        "description": "Add a new daily log to the database",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Daily Log object to be  ",
+            "schema": {
+              "$ref": "#/definitions/DailyLog"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Daily log created successfully",
+            "schema": {
+              "$ref": "#/definitions/DailyLog"
+            }
+          },
+          "400": {
+            "description": "Invalid input or empty body",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        },
+        "security": [
+          {
+            "github_auth": []
+          }
+        ]
+      }
+    },
+    "/daily-logs/{id}": {
+      "get": {
+        "tags": ["DailyLogs"],
+        "summary": "Retrieve a single daily log",
+        "description": "Get detailed information about a daily log by its ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Daily Log ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Daily log retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/DailyLog"
+            }
+          },
+          "404": {
+            "description": "Daily log not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["DailyLogs"],
+        "summary": "Update an existing daily log",
+        "description": "Update the details of a daily log by its ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Daily Log ID"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Daily Log object that needs to be  ",
+            "schema": {
+              "$ref": "#/definitions/DailyLog"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Daily log updated successfully",
+            "schema": {
+              "$ref": "#/definitions/DailyLog"
+            }
+          },
+          "400": {
+            "description": "Invalid input or empty body",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Daily log not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        },
+        "security": [
+          {
+            "github_auth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": ["DailyLogs"],
+        "summary": "Delete a daily log",
+        "description": "Remove a daily log from the database by its ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Daily Log ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Daily log deleted successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Daily log deleted successfully"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Daily log not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        },
+        "security": [
+          {
+            "github_auth": []
+          }
+        ]
+      }
+    },
+    "/auth/github": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Authenticate with GitHub",
+        "description": "Initiate GitHub OAuth2 authentication process",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/auth/github/callback": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "GitHub OAuth2 callback",
+        "description": "Callback URL for GitHub OAuth2 authentication",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Login with GitHub",
+        "description": "Initiate GitHub OAuth2 login process",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Logout",
+        "description": "Terminate the current session",
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -478,6 +1023,58 @@
         }
       },
       "required": ["username", "email"]
+    },
+    "DailyLog": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "example": "6615f3c2a9b1c8e4b1234567"
+        },
+        "foodId": {
+          "type": "string",
+          "example": "6615f3c2a9b1c8e4b7654321"
+        },
+        "date": {
+          "type": "string",
+          "example": "2026-04-10"
+        },
+        "quantity": {
+          "type": "number",
+          "example": 2
+        }
+      },
+      "required": ["userId", "foodId", "date", "quantity"]
+    },
+    "Goal": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "example": "6615f3c2a9b1c8e4b1234567"
+        },
+        "calories": {
+          "type": "number",
+          "example": 2000
+        },
+        "protein": {
+          "type": "number",
+          "example": 150
+        },
+        "carbs": {
+          "type": "number",
+          "example": 250
+        },
+        "fat": {
+          "type": "number",
+          "example": 70
+        },
+        "fiber": {
+          "type": "number",
+          "example": 30
+        }
+      },
+      "required": ["userId"]
     },
     "Error": {
       "type": "object",
