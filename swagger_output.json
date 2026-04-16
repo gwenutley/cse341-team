@@ -5,7 +5,7 @@
     "description": "API for managing Foods and Users with MongoDB",
     "version": "1.0.0"
   },
-  "host": "localhost:2000",
+  "host": "frontend341.onrender.com",
   "basePath": "/",
   "tags": [
     {
@@ -29,10 +29,7 @@
       "description": "Authentication endpoints"
     }
   ],
-  "schemes": [
-    "http",
-    "https"
-  ],
+  "schemes": ["https"],
   "securityDefinitions": {
     "github_auth": {
       "type": "oauth2",
@@ -44,12 +41,8 @@
       }
     }
   },
-  "consumes": [
-    "application/json"
-  ],
-  "produces": [
-    "application/json"
-  ],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
   "paths": {
     "/": {
       "get": {
@@ -63,9 +56,7 @@
     },
     "/foods/": {
       "get": {
-        "tags": [
-          "Foods"
-        ],
+        "tags": ["Foods"],
         "summary": "Retrieve all foods",
         "description": "Get a list of all food items in the database",
         "responses": {
@@ -90,9 +81,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Foods"
-        ],
+        "tags": ["Foods"],
         "summary": "Create a new food",
         "description": "Add a new food item to the database",
         "parameters": [
@@ -137,9 +126,7 @@
     },
     "/foods/{id}": {
       "get": {
-        "tags": [
-          "Foods"
-        ],
+        "tags": ["Foods"],
         "summary": "Retrieve a single food",
         "description": "Get detailed information about a food item by its ID",
         "parameters": [
@@ -173,9 +160,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Foods"
-        ],
+        "tags": ["Foods"],
         "summary": "Update an existing food",
         "description": "Update the details of a food item by its ID",
         "parameters": [
@@ -231,9 +216,7 @@
         ]
       },
       "delete": {
-        "tags": [
-          "Foods"
-        ],
+        "tags": ["Foods"],
         "summary": "Delete a food item",
         "description": "Remove a food item from the database by its ID",
         "parameters": [
@@ -286,9 +269,7 @@
     },
     "/users/": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Retrieve all users",
         "description": "Get a list of all user accounts in the database",
         "responses": {
@@ -313,9 +294,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Create a new user",
         "description": "Add a new user account to the database",
         "parameters": [
@@ -360,9 +339,7 @@
     },
     "/users/{id}": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Retrieve a single user",
         "description": "Get detailed information about a user account by its ID",
         "parameters": [
@@ -396,9 +373,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Update an existing user",
         "description": "Update the details of a user account by its ID",
         "parameters": [
@@ -454,9 +429,7 @@
         ]
       },
       "delete": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Delete a user account",
         "description": "Remove a user account from the database by its ID",
         "parameters": [
@@ -509,9 +482,7 @@
     },
     "/goals/": {
       "get": {
-        "tags": [
-          "Goals"
-        ],
+        "tags": ["Goals"],
         "summary": "Retrieve all goals",
         "description": "Get a list of all goals in the database",
         "responses": {
@@ -536,9 +507,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Goals"
-        ],
+        "tags": ["Goals"],
         "summary": "Create a new goal",
         "description": "Add a new goal to the database",
         "parameters": [
@@ -583,9 +552,7 @@
     },
     "/goals/{id}": {
       "get": {
-        "tags": [
-          "Goals"
-        ],
+        "tags": ["Goals"],
         "summary": "Retrieve a single goal",
         "description": "Get detailed information about a goal by its ID",
         "parameters": [
@@ -619,9 +586,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Goals"
-        ],
+        "tags": ["Goals"],
         "summary": "Update an existing goal",
         "description": "Update the details of a goal by its ID",
         "parameters": [
@@ -677,9 +642,7 @@
         ]
       },
       "delete": {
-        "tags": [
-          "Goals"
-        ],
+        "tags": ["Goals"],
         "summary": "Delete a goal",
         "description": "Remove a goal from the database by its ID",
         "parameters": [
@@ -732,9 +695,7 @@
     },
     "/daily-logs/": {
       "get": {
-        "tags": [
-          "DailyLogs"
-        ],
+        "tags": ["DailyLogs"],
         "summary": "Retrieve all daily logs",
         "description": "Get a list of all daily logs in the database",
         "responses": {
@@ -759,9 +720,7 @@
         }
       },
       "post": {
-        "tags": [
-          "DailyLogs"
-        ],
+        "tags": ["DailyLogs"],
         "summary": "Create a new daily log",
         "description": "Add a new daily log to the database",
         "parameters": [
@@ -806,9 +765,7 @@
     },
     "/daily-logs/{id}": {
       "get": {
-        "tags": [
-          "DailyLogs"
-        ],
+        "tags": ["DailyLogs"],
         "summary": "Retrieve a single daily log",
         "description": "Get detailed information about a daily log by its ID",
         "parameters": [
@@ -842,9 +799,7 @@
         }
       },
       "put": {
-        "tags": [
-          "DailyLogs"
-        ],
+        "tags": ["DailyLogs"],
         "summary": "Update an existing daily log",
         "description": "Update the details of a daily log by its ID",
         "parameters": [
@@ -900,9 +855,7 @@
         ]
       },
       "delete": {
-        "tags": [
-          "DailyLogs"
-        ],
+        "tags": ["DailyLogs"],
         "summary": "Delete a daily log",
         "description": "Remove a daily log from the database by its ID",
         "parameters": [
@@ -955,9 +908,7 @@
     },
     "/auth/github": {
       "get": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Authenticate with GitHub",
         "description": "Initiate GitHub OAuth2 authentication process",
         "responses": {
@@ -969,9 +920,7 @@
     },
     "/auth/github/callback": {
       "get": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "GitHub OAuth2 callback",
         "description": "Callback URL for GitHub OAuth2 authentication",
         "responses": {
@@ -983,9 +932,7 @@
     },
     "/auth/login": {
       "get": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Login with GitHub",
         "description": "Initiate GitHub OAuth2 login process",
         "responses": {
@@ -997,14 +944,12 @@
     },
     "/auth/logout": {
       "get": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Logout",
         "description": "Terminate the current session",
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -1051,10 +996,7 @@
           "example": "protein"
         }
       },
-      "required": [
-        "name",
-        "calories"
-      ]
+      "required": ["name", "calories"]
     },
     "User": {
       "type": "object",
@@ -1080,10 +1022,7 @@
           "example": "google_id_12345"
         }
       },
-      "required": [
-        "username",
-        "email"
-      ]
+      "required": ["username", "email"]
     },
     "DailyLog": {
       "type": "object",
@@ -1105,12 +1044,7 @@
           "example": 2
         }
       },
-      "required": [
-        "userId",
-        "foodId",
-        "date",
-        "quantity"
-      ]
+      "required": ["userId", "foodId", "date", "quantity"]
     },
     "Goal": {
       "type": "object",
@@ -1140,9 +1074,7 @@
           "example": 30
         }
       },
-      "required": [
-        "userId"
-      ]
+      "required": ["userId"]
     },
     "Error": {
       "type": "object",
