@@ -4,6 +4,10 @@ const findAll = async () => {
   return await DailyLog.find()
 }
 
+const findAllByUserId = async userId => {
+  return await DailyLog.find({ user: userId })
+}
+
 const findById = async id => {
   return await DailyLog.findById(id)
 }
@@ -34,6 +38,7 @@ const insertMany = async dailyLogs => {
 
 module.exports = {
   findAll,
+  findAllByUserId,
   findById,
   create,
   updateById,

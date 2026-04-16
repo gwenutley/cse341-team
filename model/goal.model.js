@@ -4,6 +4,10 @@ const findAll = async () => {
   return await Goal.find()
 }
 
+const findAllByUserId = async userId => {
+  return await Goal.find({ user: userId })
+}
+
 const findById = async id => {
   return await Goal.findById(id)
 }
@@ -34,6 +38,7 @@ const insertMany = async goals => {
 
 module.exports = {
   findAll,
+  findAllByUserId,
   findById,
   create,
   updateById,

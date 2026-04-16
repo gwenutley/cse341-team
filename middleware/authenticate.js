@@ -7,6 +7,15 @@ const isAuthenticated = (req, res, next) => {
   }
 }
 
+const isAdmin = (req, res, next) => {
+  if (req.user && req.user.role === 'admin') {
+    return next()
+  } else {
+    res.status(403).json('Admin access required.')
+  }
+}
+
 module.exports = {
   isAuthenticated,
+  isAdmin,
 }

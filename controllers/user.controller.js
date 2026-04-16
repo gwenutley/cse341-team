@@ -1,15 +1,41 @@
 const userModel = require('../model/user.model')
 const ApiError = require('../utils/apiError')
 
+const getMe = async (req, res, next) => {
+  /*
+    #swagger.tags = ['Auth']
+    #swagger.summary = 'Retrieve current user information'
+    #swagger.description = 'Get the profile of the currently logged-in user'
+    #swagger.security = [{ "github_auth": [] }]
+    #swagger.responses[200] = {
+      description: 'Current user retrieved successfully',
+      schema: { $ref: '#/definitions/User' }
+    }
+    #swagger.responses[401] = { description: 'Unauthorized' }
+    #swagger.responses[500] = {
+      description: 'Internal server error',
+      schema: { $ref: '#/definitions/Error' }
+    }
+  */
+  try {
+    res.status(200).json(req.user)
+  } catch (error) {
+    next(error)
+  }
+}
+
 const getAll = async (_req, res, next) => {
   /*
     #swagger.tags = ['Users']
     #swagger.summary = 'Retrieve all users'
-    #swagger.description = 'Get a list of all user accounts in the database'
+    #swagger.description = 'Get a list of all user accounts in the database. Restricted to administrators.'
+    #swagger.security = [{ "github_auth": [] }]
     #swagger.responses[200] = {
       description: 'List of users retrieved successfully',
       schema: [{ $ref: '#/definitions/User' }]
     }
+    #swagger.responses[401] = { description: 'Unauthorized' }
+    #swagger.responses[403] = { description: 'Forbidden - Admin access required' }
     #swagger.responses[500] = {
       description: 'Internal server error',
       schema: { $ref: '#/definitions/Error' }
@@ -160,6 +186,7 @@ const deleteById = async (req, res, next) => {
 }
 
 module.exports = {
+  getMe,
   getAll,
   getById,
   update,

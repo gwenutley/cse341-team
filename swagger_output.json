@@ -83,7 +83,7 @@
       "post": {
         "tags": ["Foods"],
         "summary": "Create a new food",
-        "description": "Add a new food item to the database",
+        "description": "Add a new food item to the database. Requires authentication.",
         "parameters": [
           {
             "name": "body",
@@ -162,7 +162,7 @@
       "put": {
         "tags": ["Foods"],
         "summary": "Update an existing food",
-        "description": "Update the details of a food item by its ID",
+        "description": "Update the details of a food item by its ID. Requires authentication.",
         "parameters": [
           {
             "name": "id",
@@ -218,7 +218,7 @@
       "delete": {
         "tags": ["Foods"],
         "summary": "Delete a food item",
-        "description": "Remove a food item from the database by its ID",
+        "description": "Remove a food item from the database by its ID. Requires authentication.",
         "parameters": [
           {
             "name": "id",
@@ -271,7 +271,7 @@
       "get": {
         "tags": ["Users"],
         "summary": "Retrieve all users",
-        "description": "Get a list of all user accounts in the database",
+        "description": "Get a list of all user accounts in the database. Restricted to administrators.",
         "responses": {
           "200": {
             "description": "List of users retrieved successfully",
@@ -285,13 +285,24 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden - Admin access required"
+          },
           "500": {
             "description": "Internal server error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           }
-        }
+        },
+        "security": [
+          {
+            "github_auth": []
+          }
+        ]
       },
       "post": {
         "tags": ["Users"],
@@ -484,7 +495,7 @@
       "get": {
         "tags": ["Goals"],
         "summary": "Retrieve all goals",
-        "description": "Get a list of all goals in the database",
+        "description": "Get a list of all goals. Regular users only see their own goals, while admins see all goals.",
         "responses": {
           "200": {
             "description": "List of goals retrieved successfully",
@@ -498,18 +509,26 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "500": {
             "description": "Internal server error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           }
-        }
+        },
+        "security": [
+          {
+            "github_auth": []
+          }
+        ]
       },
       "post": {
         "tags": ["Goals"],
         "summary": "Create a new goal",
-        "description": "Add a new goal to the database",
+        "description": "Add a new goal to the database. The goal will be automatically associated with the currently logged-in user.",
         "parameters": [
           {
             "name": "body",
@@ -554,7 +573,7 @@
       "get": {
         "tags": ["Goals"],
         "summary": "Retrieve a single goal",
-        "description": "Get detailed information about a goal by its ID",
+        "description": "Get detailed information about a goal by its ID. Users can only access their own goals unless they are an admin.",
         "parameters": [
           {
             "name": "id",
@@ -571,6 +590,12 @@
               "$ref": "#/definitions/Goal"
             }
           },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden - Access denied"
+          },
           "404": {
             "description": "Goal not found",
             "schema": {
@@ -583,12 +608,17 @@
               "$ref": "#/definitions/Error"
             }
           }
-        }
+        },
+        "security": [
+          {
+            "github_auth": []
+          }
+        ]
       },
       "put": {
         "tags": ["Goals"],
         "summary": "Update an existing goal",
-        "description": "Update the details of a goal by its ID",
+        "description": "Update the details of a goal by its ID. Users can only update their own goals unless they are an admin.",
         "parameters": [
           {
             "name": "id",
@@ -622,6 +652,9 @@
           "401": {
             "description": "Unauthorized"
           },
+          "403": {
+            "description": "Forbidden - Access denied"
+          },
           "404": {
             "description": "Goal not found",
             "schema": {
@@ -644,7 +677,7 @@
       "delete": {
         "tags": ["Goals"],
         "summary": "Delete a goal",
-        "description": "Remove a goal from the database by its ID",
+        "description": "Remove a goal from the database by its ID. Users can only delete their own goals unless they are an admin.",
         "parameters": [
           {
             "name": "id",
@@ -673,6 +706,9 @@
           "401": {
             "description": "Unauthorized"
           },
+          "403": {
+            "description": "Forbidden - Access denied"
+          },
           "404": {
             "description": "Goal not found",
             "schema": {
@@ -697,7 +733,7 @@
       "get": {
         "tags": ["DailyLogs"],
         "summary": "Retrieve all daily logs",
-        "description": "Get a list of all daily logs in the database",
+        "description": "Get a list of all daily logs. Regular users only see their own logs, while admins see all logs.",
         "responses": {
           "200": {
             "description": "List of daily logs retrieved successfully",
@@ -711,18 +747,26 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "500": {
             "description": "Internal server error",
             "schema": {
               "$ref": "#/definitions/Error"
             }
           }
-        }
+        },
+        "security": [
+          {
+            "github_auth": []
+          }
+        ]
       },
       "post": {
         "tags": ["DailyLogs"],
         "summary": "Create a new daily log",
-        "description": "Add a new daily log to the database",
+        "description": "Add a new daily log to the database. The log will be automatically associated with the currently logged-in user.",
         "parameters": [
           {
             "name": "body",
@@ -767,7 +811,7 @@
       "get": {
         "tags": ["DailyLogs"],
         "summary": "Retrieve a single daily log",
-        "description": "Get detailed information about a daily log by its ID",
+        "description": "Get detailed information about a daily log by its ID. Users can only access their own logs unless they are an admin.",
         "parameters": [
           {
             "name": "id",
@@ -784,6 +828,12 @@
               "$ref": "#/definitions/DailyLog"
             }
           },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden - Access denied"
+          },
           "404": {
             "description": "Daily log not found",
             "schema": {
@@ -796,12 +846,17 @@
               "$ref": "#/definitions/Error"
             }
           }
-        }
+        },
+        "security": [
+          {
+            "github_auth": []
+          }
+        ]
       },
       "put": {
         "tags": ["DailyLogs"],
         "summary": "Update an existing daily log",
-        "description": "Update the details of a daily log by its ID",
+        "description": "Update the details of a daily log by its ID. Users can only update their own logs unless they are an admin.",
         "parameters": [
           {
             "name": "id",
@@ -835,6 +890,9 @@
           "401": {
             "description": "Unauthorized"
           },
+          "403": {
+            "description": "Forbidden - Access denied"
+          },
           "404": {
             "description": "Daily log not found",
             "schema": {
@@ -857,7 +915,7 @@
       "delete": {
         "tags": ["DailyLogs"],
         "summary": "Delete a daily log",
-        "description": "Remove a daily log from the database by its ID",
+        "description": "Remove a daily log from the database by its ID. Users can only delete their own logs unless they are an admin.",
         "parameters": [
           {
             "name": "id",
@@ -885,6 +943,9 @@
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden - Access denied"
           },
           "404": {
             "description": "Daily log not found",
@@ -930,6 +991,35 @@
         }
       }
     },
+    "/auth/me": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Retrieve current user information",
+        "description": "Get the profile of the currently logged-in user",
+        "responses": {
+          "200": {
+            "description": "Current user retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        },
+        "security": [
+          {
+            "github_auth": []
+          }
+        ]
+      }
+    },
     "/auth/login": {
       "get": {
         "tags": ["Auth"],
@@ -949,7 +1039,19 @@
         "description": "Terminate the current session",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Logged out successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Logged out successfully"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       }
@@ -1027,29 +1129,38 @@
     "DailyLog": {
       "type": "object",
       "properties": {
-        "userId": {
+        "user": {
           "type": "string",
           "example": "6615f3c2a9b1c8e4b1234567"
-        },
-        "foodId": {
-          "type": "string",
-          "example": "6615f3c2a9b1c8e4b7654321"
         },
         "date": {
           "type": "string",
           "example": "2026-04-10"
         },
-        "quantity": {
-          "type": "number",
-          "example": 2
+        "foods": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "food": {
+                "type": "string",
+                "example": "6615f3c2a9b1c8e4b7654321"
+              },
+              "quantity": {
+                "type": "number",
+                "example": 2
+              }
+            },
+            "required": ["food", "quantity"]
+          }
         }
       },
-      "required": ["userId", "foodId", "date", "quantity"]
+      "required": ["user", "date", "foods"]
     },
     "Goal": {
       "type": "object",
       "properties": {
-        "userId": {
+        "user": {
           "type": "string",
           "example": "6615f3c2a9b1c8e4b1234567"
         },
@@ -1068,13 +1179,9 @@
         "fat": {
           "type": "number",
           "example": 70
-        },
-        "fiber": {
-          "type": "number",
-          "example": 30
         }
       },
-      "required": ["userId"]
+      "required": ["user", "calories", "protein", "carbs", "fat"]
     },
     "Error": {
       "type": "object",

@@ -1,5 +1,7 @@
 const router = require('express').Router()
 const passport = require('passport')
+const userController = require('../controllers/user.controller')
+const { isAuthenticated } = require('../middleware/authenticate')
 
 router.get(
   '/github',
@@ -26,6 +28,8 @@ router.get(
   }
 )
 
+router.get('/me', isAuthenticated, userController.getMe)
+
 //authentication routes
 router.get(
   '/login',
@@ -42,6 +46,10 @@ router.get('/logout', (req, res, next) => {
     #swagger.tags = ['Auth']
     #swagger.summary = 'Logout'
     #swagger.description = 'Terminate the current session'
+    #swagger.responses[200] = {
+      description: 'Logged out successfully',
+      schema: { message: 'Logged out successfully' }
+    }
   */
   req.logout(function (err) {
     if (err) {

@@ -1,22 +1,29 @@
 const goalModel = require('../model/goal.model')
 const ApiError = require('../utils/apiError')
 
-const getAll = async (_req, res, next) => {
+const getAll = async (req, res, next) => {
   /*
     #swagger.tags = ['Goals']
     #swagger.summary = 'Retrieve all goals'
-    #swagger.description = 'Get a list of all goals in the database'
+    #swagger.description = 'Get a list of all goals. Regular users only see their own goals, while admins see all goals.'
+    #swagger.security = [{ "github_auth": [] }]
     #swagger.responses[200] = {
       description: 'List of goals retrieved successfully',
       schema: [{ $ref: '#/definitions/Goal' }]
     }
+    #swagger.responses[401] = { description: 'Unauthorized' }
     #swagger.responses[500] = {
       description: 'Internal server error',
       schema: { $ref: '#/definitions/Error' }
     }
   */
   try {
-    const goals = await goalModel.findAll()
+    let goals
+    if (req.user.role === 'admin') {
+      goals = await goalModel.findAll()
+    } else {
+      goals = await goalModel.findAllByUserId(req.user.id)
+    }
     res.status(200).json(goals)
   } catch (error) {
     next(error)
@@ -27,12 +34,15 @@ const getById = async (req, res, next) => {
   /*
     #swagger.tags = ['Goals']
     #swagger.summary = 'Retrieve a single goal'
-    #swagger.description = 'Get detailed information about a goal by its ID'
+    #swagger.description = 'Get detailed information about a goal by its ID. Users can only access their own goals unless they are an admin.'
+    #swagger.security = [{ "github_auth": [] }]
     #swagger.parameters['id'] = { description: 'Goal ID' }
     #swagger.responses[200] = {
       description: 'Goal retrieved successfully',
       schema: { $ref: '#/definitions/Goal' }
     }
+    #swagger.responses[401] = { description: 'Unauthorized' }
+    #swagger.responses[403] = { description: 'Forbidden - Access denied' }
     #swagger.responses[404] = {
       description: 'Goal not found',
       schema: { $ref: '#/definitions/Error' }
@@ -47,6 +57,11 @@ const getById = async (req, res, next) => {
     if (!goal) {
       throw new ApiError(404, 'Goal not found')
     }
+
+    if (req.user.role !== 'admin' && goal.user.toString() !== req.user.id) {
+      throw new ApiError(403, 'You do not have permission to view this goal')
+    }
+
     res.status(200).json(goal)
   } catch (error) {
     next(error)
@@ -57,7 +72,7 @@ const update = async (req, res, next) => {
   /*
     #swagger.tags = ['Goals']
     #swagger.summary = 'Update an existing goal'
-    #swagger.description = 'Update the details of a goal by its ID'
+    #swagger.description = 'Update the details of a goal by its ID. Users can only update their own goals unless they are an admin.'
     #swagger.security = [{ "github_auth": [] }]
     #swagger.parameters['id'] = { description: 'Goal ID' }
     #swagger.parameters['body'] = {
@@ -74,6 +89,7 @@ const update = async (req, res, next) => {
       schema: { $ref: '#/definitions/Error' }
     }
     #swagger.responses[401] = { description: 'Unauthorized' }
+    #swagger.responses[403] = { description: 'Forbidden - Access denied' }
     #swagger.responses[404] = {
       description: 'Goal not found',
       schema: { $ref: '#/definitions/Error' }
@@ -84,10 +100,19 @@ const update = async (req, res, next) => {
     }
   */
   try {
-    const goal = await goalModel.updateById(req.params.id, req.body)
-    if (!goal) {
+    const existingGoal = await goalModel.findById(req.params.id)
+    if (!existingGoal) {
       throw new ApiError(404, 'Goal not found')
     }
+
+    if (
+      req.user.role !== 'admin' &&
+      existingGoal.user.toString() !== req.user.id
+    ) {
+      throw new ApiError(403, 'You do not have permission to update this goal')
+    }
+
+    const goal = await goalModel.updateById(req.params.id, req.body)
     res.status(200).json(goal)
   } catch (error) {
     next(error)
@@ -98,7 +123,7 @@ const create = async (req, res, next) => {
   /*
     #swagger.tags = ['Goals']
     #swagger.summary = 'Create a new goal'
-    #swagger.description = 'Add a new goal to the database'
+    #swagger.description = 'Add a new goal to the database. The goal will be automatically associated with the currently logged-in user.'
     #swagger.security = [{ "github_auth": [] }]
     #swagger.parameters['body'] = {
       in: 'body',
@@ -120,6 +145,7 @@ const create = async (req, res, next) => {
     }
   */
   try {
+    req.body.user = req.user.id
     const goal = await goalModel.create(req.body)
     res.status(201).json(goal)
   } catch (error) {
@@ -131,7 +157,7 @@ const deleteById = async (req, res, next) => {
   /*
     #swagger.tags = ['Goals']
     #swagger.summary = 'Delete a goal'
-    #swagger.description = 'Remove a goal from the database by its ID'
+    #swagger.description = 'Remove a goal from the database by its ID. Users can only delete their own goals unless they are an admin.'
     #swagger.security = [{ "github_auth": [] }]
     #swagger.parameters['id'] = { description: 'Goal ID' }
     #swagger.responses[200] = {
@@ -139,6 +165,7 @@ const deleteById = async (req, res, next) => {
       schema: { message: 'Goal deleted successfully' }
     }
     #swagger.responses[401] = { description: 'Unauthorized' }
+    #swagger.responses[403] = { description: 'Forbidden - Access denied' }
     #swagger.responses[404] = {
       description: 'Goal not found',
       schema: { $ref: '#/definitions/Error' }
@@ -149,10 +176,16 @@ const deleteById = async (req, res, next) => {
     }
   */
   try {
-    const goal = await goalModel.deleteById(req.params.id)
+    const goal = await goalModel.findById(req.params.id)
     if (!goal) {
       throw new ApiError(404, 'Goal not found')
     }
+
+    if (req.user.role !== 'admin' && goal.user.toString() !== req.user.id) {
+      throw new ApiError(403, 'You do not have permission to delete this goal')
+    }
+
+    await goalModel.deleteById(req.params.id)
     res.status(200).json({ message: 'Goal deleted successfully' })
   } catch (error) {
     next(error)
